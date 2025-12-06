@@ -1,0 +1,22 @@
+{
+    "name": "HS21 Digital",
+    "short_name": "HS21",
+    "description": "Premium Digital Solutions & Website Building Service",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#050507",
+    "theme_color": "#6366f1",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "https://img.icons8.com/fluency/192/web.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "https://img.icons8.com/fluency/512/web.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
