@@ -122,9 +122,48 @@ function initTypingEffect() {
     type();
 }
 
+// Back to Top with Progress
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('back-to-top');
+    const circle = backToTopBtn.querySelector('circle');
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+
+    // Set initial state
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = circumference;
+
+    window.addEventListener('scroll', () => {
+        // Calculate scroll percentage
+        const scrollTop = window.scrollY;
+        const height = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = scrollTop / height;
+
+        // Update circular progress
+        const offset = circumference - (scrollPercent * circumference);
+        circle.style.strokeDashoffset = offset;
+
+        // Show/Hide button
+        if (scrollTop > 300) {
+            backToTopBtn.classList.add('active');
+        } else {
+            backToTopBtn.classList.remove('active');
+        }
+    });
+
+    // Scroll to top on click
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    initStars(); // Assuming initAntigravityStars was a typo for initStars
+    initStars();
     initTypingEffect();
+    initBackToTop();
 });
 
 // Custom Cursor
