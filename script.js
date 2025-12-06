@@ -481,11 +481,15 @@ const projectData = {
 };
 
 // Open modal when project card is clicked
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', () => {
+// Open modal when project card is clicked (Event Delegation)
+document.addEventListener('click', (e) => {
+    const card = e.target.closest('.project-card');
+    if (card) {
         const projectId = card.getAttribute('data-project');
-        openProjectModal(projectId);
-    });
+        if (projectId && projectData[projectId]) {
+            openProjectModal(projectId);
+        }
+    }
 });
 
 // Close modal handlers
