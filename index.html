@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HS21 Digital | Elevate Your Online Presence</title>
+    <meta name="description"
+        content="Premium website building, digital marketing, and branding services to grow your business.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">HS21<span class="accent">.</span></a>
+            <ul class="nav-links">
+                <li><a href="services.html">Services</a></li>
+                <li><a href="#work">Our Work</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact" class="btn-primary small">Let's Talk</a></li>
+            </ul>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="badge">Digital Excellence</span>
+                <h1 class="hero-title">We Build <span class="gradient-text">Digital Empires</span> for Visionaries.</h1>
+                <p class="hero-subtitle">Transforming ideas into high-impact websites and marketing strategies that
+                    drive real growth.</p>
+                <div class="hero-btns">
+                    <a href="#contact" class="btn-primary">Start Your Project</a>
+                    <a href="#services" class="btn-secondary">Explore Services</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <!-- Abstract 3D shape or illustration will go here -->
+                <div class="glowing-orb"></div>
+                <div class="glass-card float-animation">
+                    <div class="card-icon"><i data-lucide="bar-chart-2"></i></div>
+                    <div class="card-text">
+                        <span class="label">Growth</span>
+                        <span class="value">+150%</span>
+                    </div>
+                </div>
+                <div class="glass-card float-animation-delayed">
+                    <div class="card-icon"><i data-lucide="code"></i></div>
+                    <div class="card-text">
+                        <span class="label">Code</span>
+                        <span class="value">Clean</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <i data-lucide="arrow-down"></i>
+        </div>
+    </header>
+
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Expertise</h2>
+                <p class="section-subtitle">Comprehensive digital solutions tailored to your unique needs.</p>
+            </div>
+            <div class="services-grid">
+                <a href="services.html#web-development" class="service-card-link">
+                    <div class="service-card">
+                        <div class="icon-wrapper"><i data-lucide="monitor"></i></div>
+                        <h3>Web Development</h3>
+                        <p>Stunning, responsive, and high-performance websites built with modern technologies.</p>
+                        <ul class="service-list">
+                            <li><i data-lucide="check"></i> Custom Design</li>
+                            <li><i data-lucide="check"></i> E-commerce</li>
+                            <li><i data-lucide="check"></i> Web Applications</li>
+                        </ul>
+                    </div>
+                </a>
+                <a href="services.html#digital-marketing" class="service-card-link">
+                    <div class="service-card">
+                        <div class="icon-wrapper"><i data-lucide="megaphone"></i></div>
+                        <h3>Digital Marketing</h3>
+                        <p>Data-driven strategies to increase visibility and convert visitors into loyal customers.</p>
+                        <ul class="service-list">
+                            <li><i data-lucide="check"></i> SEO Optimization</li>
+                            <li><i data-lucide="check"></i> Social Media Management</li>
+                            <li><i data-lucide="check"></i> PPC Campaigns</li>
+                        </ul>
+                    </div>
+                </a>
+                <a href="services.html#brand-identity" class="service-card-link">
+                    <div class="service-card">
+                        <div class="icon-wrapper"><i data-lucide="pen-tool"></i></div>
+                        <h3>Brand Identity</h3>
+                        <p>Crafting memorable brands that resonate with your target audience and stand out.</p>
+                        <ul class="service-list">
+                            <li><i data-lucide="check"></i> Logo Design</li>
+                            <li><i data-lucide="check"></i> Brand Guidelines</li>
+                            <li><i data-lucide="check"></i> Visual Assets</li>
+                        </ul>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Work</h2>
+                <p class="section-subtitle">A showcase of our recent projects and success stories.</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="project-card" data-project="ecommerce">
+                    <div class="project-image">
+                        <img src="./images/ecommerce_project.png" alt="E-commerce Platform">
+                        <div class="project-overlay">
+                            <span class="view-project">View Project <i data-lucide="arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Web Development</span>
+                        <h3>Luxury E-commerce Platform</h3>
+                        <p>Built a high-converting e-commerce platform with custom integrations and seamless checkout
+                            experience.</p>
+                        <div class="project-tags">
+                            <span class="tag">React</span>
+                            <span class="tag">Shopify</span>
+                            <span class="tag">UI/UX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-project="restaurant">
+                    <div class="project-image">
+                        <img src="./images/restaurant_project.png" alt="Restaurant Website">
+                        <div class="project-overlay">
+                            <span class="view-project">View Project <i data-lucide="arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Brand Identity</span>
+                        <h3>Fine Dining Restaurant</h3>
+                        <p>Complete brand refresh and website redesign for upscale dining experience with online
+                            reservations.</p>
+                        <div class="project-tags">
+                            <span class="tag">Branding</span>
+                            <span class="tag">Web Design</span>
+                            <span class="tag">SEO</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-project="saas">
+                    <div class="project-image">
+                        <img src="./images/saas_project.png" alt="SaaS Platform">
+                        <div class="project-overlay">
+                            <span class="view-project">View Project <i data-lucide="arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Web Application</span>
+                        <h3>SaaS Analytics Dashboard</h3>
+                        <p>Enterprise-grade analytics platform with real-time data visualization and customizable
+                            workflows.</p>
+                        <div class="project-tags">
+                            <span class="tag">Vue.js</span>
+                            <span class="tag">Node.js</span>
+                            <span class="tag">API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-project="fitness">
+                    <div class="project-image">
+                        <img src="./images/fitness_project.png" alt="Fitness App">
+                        <div class="project-overlay">
+                            <span class="view-project">View Project <i data-lucide="arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Digital Marketing</span>
+                        <h3>Fitness App Launch Campaign</h3>
+                        <p>360° marketing strategy that generated 50K+ downloads in the first month across multiple
+                            channels.</p>
+                        <div class="project-tags">
+                            <span class="tag">Social Media</span>
+                            <span class="tag">PPC</span>
+                            <span class="tag">Content</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-project="startup">
+                    <div class="project-image">
+                        <img src="./images/startup_project.png" alt="Tech Startup Branding">
+                        <div class="project-overlay">
+                            <span class="view-project">View Project <i data-lucide="arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">Brand Identity</span>
+                        <h3>Tech Startup Branding</h3>
+                        <p>Created comprehensive brand identity including logo, guidelines, and marketing collateral for
+                            AI startup.</p>
+                        <div class="project-tags">
+                            <span class="tag">Logo Design</span>
+                            <span class="tag">Guidelines</span>
+                            <span class="tag">Assets</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card" data-project="seo">
+                    <div class="project-image">
+                        <img src="./images/seo_project.png" alt="SEO Optimization">
+                        <div class="project-overlay">
+                            <span class="view-project">View Project <i data-lucide="arrow-right"></i></span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <span class="project-category">SEO & Marketing</span>
+                        <h3>E-commerce SEO Optimization</h3>
+                        <p>Increased organic traffic by 250% and conversions by 180% through strategic SEO
+                            implementation.</p>
+                        <div class="project-tags">
+                            <span class="tag">SEO</span>
+                            <span class="tag">Analytics</span>
+                            <span class="tag">Growth</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container about-container">
+            <div class="about-content">
+                <h2 class="section-title">Why Choose HS21?</h2>
+                <p>We don't just build websites; we build partnerships. Our approach is rooted in understanding your
+                    business goals and translating them into digital reality.</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Projects Delivered</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Client Satisfaction</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Support</span>
+                    </div>
+                </div>
+            </div>
+            <div class="about-image">
+                <div class="image-placeholder"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container contact-container">
+            <div class="contact-info">
+                <h2 class="section-title">Let's Create Something Amazing</h2>
+                <p>Ready to take your business to the next level? Reach out to us today.</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i data-lucide="mail"></i>
+                        <span>hello@hs21digital.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="map-pin"></i>
+                        <span>San Francisco, CA</span>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="5" placeholder="Tell us about your project" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary full-width">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Project Modal -->
+    <div class="project-modal" id="project-modal">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close" aria-label="Close modal">
+                <i data-lucide="x"></i>
+            </button>
+            <div class="modal-body" id="modal-body">
+                <!-- Content will be injected by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Screenshot Lightbox -->
+    <div class="feature-lightbox" id="feature-lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">
+                <i data-lucide="x"></i>
+            </button>
+            <img class="lightbox-image" id="lightbox-image" src="" alt="Feature Screenshot">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- Chatbot Widget -->
+    <div class="chatbot-container" id="chatbot-container">
+        <div class="chat-window" id="chat-window">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="bot-avatar">
+                        <i data-lucide="bot"></i>
+                    </div>
+                    <div>
+                        <h4>HS21 Assistant</h4>
+                        <span class="status-indicator">
+                            <span class="status-dot"></span>
+                            Online
+                        </span>
+                    </div>
+                </div>
+                <button class="close-chat" id="close-chat" aria-label="Close chat">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="message bot-message">
+                    <div class="message-avatar">
+                        <i data-lucide="bot"></i>
+                    </div>
+                    <div class="message-content">
+                        <p>👋 Hi! I'm your HS21 Digital assistant. How can I help you today?</p>
+                        <span class="message-time">Just now</span>
+                    </div>
+                </div>
+                <div class="quick-replies">
+                    <button class="quick-reply" data-message="I need a website">🌐 Need a Website</button>
+                    <button class="quick-reply" data-message="Tell me about digital marketing">📈 Digital
+                        Marketing</button>
+                    <button class="quick-reply" data-message="What are your pricing options?">💰 Pricing</button>
+                </div>
+            </div>
+            <div class="chat-input-container">
+                <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+                <button class="send-btn" id="send-btn" aria-label="Send message">
+                    <i data-lucide="send"></i>
+                </button>
+            </div>
+        </div>
+        <button class="chat-toggle" id="chat-toggle" aria-label="Open chat">
+            <i data-lucide="message-circle"></i>
+            <span class="notification-badge">1</span>
+        </button>
+    </div>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="#" class="logo">HS21<span class="accent">.</span></a>
+                <p>Elevating businesses through digital innovation.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+            <div class="social-links">
+                <a href="#"><i data-lucide="instagram"></i></a>
+                <a href="#"><i data-lucide="twitter"></i></a>
+                <a href="#"><i data-lucide="linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 HS21 Digital Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
