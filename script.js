@@ -1,3 +1,37 @@
+// Star Background
+function createStars() {
+    const container = document.getElementById('stars-container');
+    const starCount = 100;
+
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+
+        // Random position
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+
+        // Random animation properties
+        const duration = 2 + Math.random() * 4; // 2-6s
+        const delay = Math.random() * 4;
+
+        star.style.left = `${x}%`;
+        star.style.top = `${y}%`;
+        star.style.setProperty('--duration', `${duration}s`);
+        star.style.setProperty('--delay', `${delay}s`);
+
+        // Varying sizes
+        if (Math.random() < 0.1) { // 10% chance for bigger star
+            star.style.width = '3px';
+            star.style.height = '3px';
+        }
+
+        container.appendChild(star);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', createStars);
+
 // Custom Cursor
 const cursorDot = document.getElementById('cursor-dot');
 const cursorOutline = document.getElementById('cursor-outline');

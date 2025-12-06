@@ -32,6 +32,47 @@ body {
     overflow-x: hidden;
 }
 
+/* Star Background */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle var(--duration) ease-in-out infinite;
+    animation-delay: var(--delay);
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.5);
+        box-shadow: 0 0 10px white;
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+}
+
 /* Custom Cursor */
 .cursor-dot,
 .cursor-outline {
