@@ -1,87 +1,80 @@
 // Star Background & Cursor Swarm
-// Antigravity Background Effect
-function initAntigravityStars() {
+function initStars() {
     const container = document.getElementById('stars-container');
-    const starCount = 150;
+    const starCount = 100;
 
+    // 1. Static Background Stars
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
 
-        // Random horizontal position
+        // Random position
         const x = Math.random() * 100;
+        const y = Math.random() * 100;
 
         // Random animation properties
-        const duration = 5 + Math.random() * 15; // 5-20s duration (slower is better)
-        const delay = Math.random() * 20; // Random start delay
-        const scale = 0.5 + Math.random() * 1.5; // Random size variation
-        const opacity = 0.3 + Math.random() * 0.7;
+        const duration = 2 + Math.random() * 4; // 2-6s
+        const delay = Math.random() * 4;
 
         star.style.left = `${x}%`;
-        star.style.width = `${Math.max(1, scale * 2)}px`;
-        star.style.height = `${Math.max(1, scale * 2)}px`;
-        star.style.opacity = opacity;
+        star.style.top = `${y}%`;
+        star.style.setProperty('--duration', `${duration}s`);
+        star.style.setProperty('--delay', `${delay}s`);
 
-        // Set inline styles for animation
-        star.style.animationDuration = `${duration}s`;
-        star.style.animationDelay = `-${delay}s`; // Negative delay to start mid-animation
-
-        // Add some color variation (subtle blue/purple tint)
-        if (Math.random() > 0.7) {
-            star.style.backgroundColor = '#6366f1'; // Primary color
-            star.style.boxShadow = '0 0 4px #6366f1';
+        if (Math.random() < 0.1) {
+            star.style.width = '3px';
+            star.style.height = '3px';
         }
 
         container.appendChild(star);
     }
-}
 
-// 2. Interactive Cursor Swarm
-const swarmCount = 20;
-const swarmStars = [];
+    // 2. Interactive Cursor Swarm
+    const swarmCount = 20;
+    const swarmStars = [];
 
-for (let i = 0; i < swarmCount; i++) {
-    const star = document.createElement('div');
-    star.className = 'swarm-star';
-    document.body.appendChild(star);
+    for (let i = 0; i < swarmCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'swarm-star';
+        document.body.appendChild(star);
 
-    swarmStars.push({
-        element: star,
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        offsetX: (Math.random() - 0.5) * 60, // Spread range
-        offsetY: (Math.random() - 0.5) * 60,
-        speed: 0.05 + Math.random() * 0.08 // Variable speed for natural feel
+        swarmStars.push({
+            element: star,
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            offsetX: (Math.random() - 0.5) * 60, // Spread range
+            offsetY: (Math.random() - 0.5) * 60,
+            speed: 0.05 + Math.random() * 0.08 // Variable speed for natural feel
+        });
+    }
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
     });
+
+    function animateSwarm() {
+        swarmStars.forEach(star => {
+            // Target position is mouse + offset
+            const targetX = mouseX + star.offsetX;
+            const targetY = mouseY + star.offsetY;
+
+            // Smooth easing (Lerp)
+            star.x += (targetX - star.x) * star.speed;
+            star.y += (targetY - star.y) * star.speed;
+
+            star.element.style.transform = `translate(${star.x}px, ${star.y}px)`;
+        });
+        requestAnimationFrame(animateSwarm);
+    }
+
+    animateSwarm();
 }
 
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
-
-document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-});
-
-function animateSwarm() {
-    swarmStars.forEach(star => {
-        // Target position is mouse + offset
-        const targetX = mouseX + star.offsetX;
-        const targetY = mouseY + star.offsetY;
-
-        // Smooth easing (Lerp)
-        star.x += (targetX - star.x) * star.speed;
-        star.y += (targetY - star.y) * star.speed;
-
-        star.element.style.transform = `translate(${star.x}px, ${star.y}px)`;
-    });
-    requestAnimationFrame(animateSwarm);
-}
-
-animateSwarm();
-
-
-document.addEventListener('DOMContentLoaded', initAntigravityStars);
+document.addEventListener('DOMContentLoaded', initStars);
 
 // Custom Cursor
 const cursorDot = document.getElementById('cursor-dot');
