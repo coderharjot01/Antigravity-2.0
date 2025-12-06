@@ -1,7 +1,9 @@
 // Star Background & Cursor Swarm
 function initStars() {
+    // Mobile optimization: Less stars
+    const isMobile = window.innerWidth < 768;
     const container = document.getElementById('stars-container');
-    const starCount = 100;
+    const starCount = isMobile ? 30 : 100; // Reduce from 100 to 30 on mobile
 
     // 1. Static Background Stars
     for (let i = 0; i < starCount; i++) {
@@ -38,49 +40,51 @@ function initStars() {
         container.appendChild(star);
     }
 
-    // 2. Interactive Cursor Swarm
-    const swarmCount = 20;
-    const swarmStars = [];
+    // 2. Interactive Cursor Swarm (Disable on mobile)
+    if (!isMobile) {
+        const swarmCount = 20;
+        const swarmStars = [];
 
-    for (let i = 0; i < swarmCount; i++) {
-        const star = document.createElement('div');
-        star.className = 'swarm-star';
-        document.body.appendChild(star);
+        for (let i = 0; i < swarmCount; i++) {
+            const star = document.createElement('div');
+            star.className = 'swarm-star';
+            document.body.appendChild(star);
 
-        swarmStars.push({
-            element: star,
-            x: window.innerWidth / 2,
-            y: window.innerHeight / 2,
-            offsetX: (Math.random() - 0.5) * 60, // Spread range
-            offsetY: (Math.random() - 0.5) * 60,
-            speed: 0.05 + Math.random() * 0.08 // Variable speed for natural feel
+            swarmStars.push({
+                element: star,
+                x: window.innerWidth / 2,
+                y: window.innerHeight / 2,
+                offsetX: (Math.random() - 0.5) * 60, // Spread range
+                offsetY: (Math.random() - 0.5) * 60,
+                speed: 0.05 + Math.random() * 0.08 // Variable speed for natural feel
+            });
+        }
+
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
         });
+
+        function animateSwarm() {
+            swarmStars.forEach(star => {
+                // Target position is mouse + offset
+                const targetX = mouseX + star.offsetX;
+                const targetY = mouseY + star.offsetY;
+
+                // Smooth easing (Lerp)
+                star.x += (targetX - star.x) * star.speed;
+                star.y += (targetY - star.y) * star.speed;
+
+                star.element.style.transform = `translate(${star.x}px, ${star.y}px)`;
+            });
+            requestAnimationFrame(animateSwarm);
+        }
+
+        animateSwarm();
     }
-
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    });
-
-    function animateSwarm() {
-        swarmStars.forEach(star => {
-            // Target position is mouse + offset
-            const targetX = mouseX + star.offsetX;
-            const targetY = mouseY + star.offsetY;
-
-            // Smooth easing (Lerp)
-            star.x += (targetX - star.x) * star.speed;
-            star.y += (targetY - star.y) * star.speed;
-
-            star.element.style.transform = `translate(${star.x}px, ${star.y}px)`;
-        });
-        requestAnimationFrame(animateSwarm);
-    }
-
-    animateSwarm();
 }
 
 // Typing Text Effect
@@ -162,6 +166,8 @@ function initBackToTop() {
 
 // 3D Tilt Effect
 function initTiltEffect() {
+    if (window.innerWidth < 768) return; // Disable on mobile
+
     const cards = document.querySelectorAll('.project-card, .service-card');
 
     cards.forEach(card => {
