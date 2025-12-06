@@ -422,6 +422,51 @@ const modalBody = document.getElementById('modal-body');
 
 // Project data
 const projectData = {
+    wecurewellness: {
+        title: 'WeCureWellness',
+        category: 'Health & Wellness',
+        image: './images/wecurewellness.png',
+        url: 'https://wecurewellness.com/',
+        client: 'Healthcare Provider',
+        duration: '3 months',
+        year: '2024',
+        description: 'A comprehensive wellness platform connecting patients with holistic healthcare solutions. Features secure patient portals, appointment scheduling, and telemedicine integration.',
+        challenge: 'Creating a secure, HIPAA-compliant platform that is also user-friendly for elderly patients.',
+        solution: 'Built a custom portal with simplified UI/UX, integrated video conferencing, and encrypted data storage.',
+        features: ['Patient Portal', 'Telemedicine', 'Appointment Booking', 'Secure Messaging', 'Health Records', 'Payment Processing'],
+        technologies: ['React', 'Node.js', 'PostgreSQL', 'WebRTC', 'AWS'],
+        results: '+45% Patient Engagement, Reduced Wait Times by 60%, 98% Patient Satisfaction Score'
+    },
+    wppmedia: {
+        title: 'WPP Media',
+        category: 'Digital Agency',
+        image: './images/wppmedia.png',
+        url: 'https://www.wppmedia.com/',
+        client: 'Media Agency',
+        duration: '2 months',
+        year: '2024',
+        description: 'Corporate portfolio website for a leading media and digital advertising agency. Showcases high-impact campaigns with smooth animations and immersive visuals.',
+        challenge: 'The agency needed a website that reflected their creativity and modern approach to advertising.',
+        solution: 'Developed a WebGL-powered portfolio site with fluid transitions and interactive case studies.',
+        features: ['WebGL Animations', 'Interactive Case Studies', 'Client Portal', 'Career Section', 'News & Insights', 'Dynamic Filtering'],
+        technologies: ['Three.js', 'GSAP', 'Next.js', 'Contentful CMS'],
+        results: 'Award-Winning Design, +200% Lead Generation, Improved Brand Perception'
+    },
+    primebeds: {
+        title: 'PrimeBeds',
+        category: 'E-commerce',
+        image: './images/primebeds.png',
+        url: 'https://primebeds.in/',
+        client: 'Furniture Retailer',
+        duration: '4 months',
+        year: '2024',
+        description: 'Modern e-commerce store for premium bedding with seamless checkout experience. Features custom mattress configurator and augmented reality preview.',
+        challenge: 'Simplifying the complex process of buying a mattress online and reducing cart abandonment.',
+        solution: 'Implemented a custom Shopify Plus store with a guided selling quiz and AR visualization tools.',
+        features: ['Product Configurator', 'AR Preview', 'Custom Quiz', 'One-Page Checkout', 'Abandoned Cart Recovery', 'Loyalty Program'],
+        technologies: ['Shopify Plus', 'Liquid', 'Vue.js', 'AR.js'],
+        results: '+35% Conversion Rate, +50% Average Order Value, 2x Direct Traffic'
+    },
     ecommerce: {
         title: 'Luxury E-commerce Platform',
         category: 'Web Development',
@@ -429,82 +474,9 @@ const projectData = {
         client: 'Luxury Fashion Brand',
         duration: '3 months',
         year: '2024',
-        description: 'We designed and developed a high-end e-commerce platform for a luxury fashion brand, featuring custom product configurators, seamless checkout experience, and integration with existing inventory systems. The platform achieved a 40% increase in conversion rates within the first quarter.',
-        challenge: 'The client needed a sophisticated online presence that matched their luxury brand identity while providing a frictionless shopping experience across all devices.',
-        solution: 'We implemented a custom React-based frontend with Shopify as the backend, creating a headless commerce solution that delivered exceptional performance and flexibility.',
-        features: ['Custom Product Configurator', 'Real-time Inventory Sync', 'Advanced Filtering System', 'Wishlist & Favorites', 'Mobile-First Design', 'Payment Gateway Integration'],
-        technologies: ['React', 'Shopify Plus', 'Node.js', 'GraphQL', 'Tailwind CSS', 'Stripe'],
-        results: '+40% Conversion Rate, +65% Mobile Sales, 2.5s Average Load Time'
-    },
-    restaurant: {
-        title: 'Fine Dining Restaurant',
-        category: 'Brand Identity',
-        image: './images/restaurant_project.png',
-        client: 'Upscale Restaurant',
-        duration: '2 months',
-        year: '2024',
-        description: 'Complete brand refresh and website redesign for an upscale dining establishment. We created a sophisticated visual identity and an elegant website featuring online reservations, interactive menus, and a gallery showcasing the culinary experience.',
-        challenge: 'The restaurant needed to elevate their digital presence to match their premium dining experience and attract high-end clientele.',
-        solution: 'We developed a comprehensive brand identity package and a luxurious website with integrated reservation system and content management capabilities.',
-        features: ['Online Reservation System', 'Interactive Digital Menu', 'Chef\'s Table Booking', 'Event Management', 'Photo Gallery', 'Newsletter Integration'],
-        technologies: ['WordPress', 'OpenTable API', 'Custom Theme', 'JavaScript', 'PHP', 'MySQL'],
-        results: '+120% Online Reservations, +80% Brand Recognition, Featured in Local Press'
-    },
-    saas: {
-        title: 'SaaS Analytics Dashboard',
-        category: 'Web Application',
-        image: './images/saas_project.png',
-        client: 'Tech Startup',
-        duration: '6 months',
-        year: '2023',
-        description: 'Enterprise-grade analytics platform with real-time data visualization, customizable dashboards, and advanced reporting capabilities. Built for a B2B SaaS company serving Fortune 500 clients.',
-        challenge: 'Creating a scalable platform that could handle millions of data points while maintaining real-time performance and providing intuitive data visualization.',
-        solution: 'We architected a modern web application using Vue.js for the frontend and Node.js microservices for the backend, with real-time data processing capabilities.',
-        features: ['Real-time Data Processing', 'Custom Dashboard Builder', 'Advanced Filtering', 'Export & Reporting', 'Team Collaboration', 'API Integration'],
-        technologies: ['Vue.js', 'Node.js', 'MongoDB', 'Redis', 'D3.js', 'WebSockets'],
-        results: '10M+ Data Points Processed Daily, 99.9% Uptime, 50+ Enterprise Clients'
-    },
-    fitness: {
-        title: 'Fitness App Launch Campaign',
-        category: 'Digital Marketing',
-        image: './images/fitness_project.png',
-        client: 'Fitness App Startup',
-        duration: '4 months',
-        year: '2024',
-        description: '360° digital marketing strategy for a fitness app launch, including social media campaigns, influencer partnerships, content marketing, and paid advertising across multiple platforms.',
-        challenge: 'Launch a new fitness app in a highly competitive market and achieve 50,000 downloads in the first month.',
-        solution: 'We developed a comprehensive marketing strategy combining organic and paid channels, leveraging fitness influencers and creating viral-worthy content.',
-        features: ['Social Media Strategy', 'Influencer Partnerships', 'Content Creation', 'PPC Campaigns', 'Email Marketing', 'App Store Optimization'],
-        technologies: ['Facebook Ads', 'Google Ads', 'Instagram', 'TikTok', 'Mailchimp', 'Analytics Tools'],
-        results: '75K+ Downloads First Month, 4.8 Star Rating, Featured on App Store'
-    },
-    startup: {
-        title: 'Tech Startup Branding',
-        category: 'Brand Identity',
-        image: './images/startup_project.png',
-        client: 'AI Technology Startup',
-        duration: '2 months',
-        year: '2024',
-        description: 'Created a comprehensive brand identity for an AI technology startup, including logo design, brand guidelines, pitch deck templates, and marketing collateral to support their Series A fundraising.',
-        challenge: 'Establish a strong, professional brand identity that would resonate with both enterprise clients and venture capital investors.',
-        solution: 'We developed a modern, tech-forward brand identity that balanced innovation with trustworthiness, complete with detailed guidelines for consistent application.',
-        features: ['Logo & Visual Identity', 'Brand Guidelines', 'Pitch Deck Design', 'Business Cards & Stationery', 'Website Design System', 'Social Media Templates'],
-        technologies: ['Adobe Creative Suite', 'Figma', 'Brand Strategy', 'Design Systems'],
-        results: 'Successfully Raised $5M Series A, Strong Brand Recognition, Professional Market Presence'
-    },
-    seo: {
-        title: 'E-commerce SEO Optimization',
-        category: 'SEO & Marketing',
-        image: './images/seo_project.png',
-        client: 'Online Retail Store',
-        duration: '6 months',
-        year: '2023-2024',
-        description: 'Comprehensive SEO strategy and implementation for an e-commerce store, resulting in massive organic traffic growth and revenue increase through strategic optimization and content marketing.',
-        challenge: 'The client was struggling with low organic visibility and high customer acquisition costs through paid advertising.',
-        solution: 'We implemented a data-driven SEO strategy including technical optimization, content creation, link building, and conversion rate optimization.',
-        features: ['Technical SEO Audit', 'Keyword Research & Strategy', 'On-page Optimization', 'Content Marketing', 'Link Building', 'Analytics & Reporting'],
-        technologies: ['Google Analytics', 'Search Console', 'SEMrush', 'Ahrefs', 'Schema Markup', 'Page Speed Tools'],
-        results: '+250% Organic Traffic, +180% Conversions, Page 1 Rankings for 150+ Keywords'
+        description: 'High-end e-commerce platform.',
+        features: [],
+        technologies: []
     }
 };
 
@@ -586,8 +558,8 @@ function openProjectModal(projectId) {
         ` : ''}
 
         <div class="modal-cta">
-            <a href="#contact" class="btn-primary" onclick="closeProjectModal()">Start Your Project</a>
-            <a href="#work" class="btn-secondary" onclick="closeProjectModal()">View More Work</a>
+            ${project.url ? `<a href="${project.url}" target="_blank" rel="noopener noreferrer" class="btn-primary">Visit Website <i data-lucide="external-link"></i></a>` : ''}
+            <a href="#contact" class="btn-secondary" onclick="closeProjectModal()">Start Your Project</a>
         </div>
     `;
 
