@@ -227,6 +227,7 @@ app.post('/api/contact', async (req, res) => {
         };
 
         // Send emails (skip if EMAIL_USER is not configured)
+        // Send emails (skip if EMAIL_USER is not configured)
         if (process.env.EMAIL_USER) {
             console.log('📧 Attempting to send emails...');
             try {
@@ -236,8 +237,17 @@ app.post('/api/contact', async (req, res) => {
                 console.log('✅ Confirmation email sent');
             } catch (emailError) {
                 console.error('❌ Email sending error details:', emailError);
-                // We don't throw here so the submission is still saved
+                return res.status(500).json({
+                    success: false,
+                    error: 'Failed to send email. Server configuration issue.'
+                });
             }
+        } else {
+            console.log('⚠️ EMAIL_USER not configured. Skipping email.');
+            return res.status(500).json({
+                success: false,
+                error: 'Email service not configured on server.'
+            });
         }
 
         res.status(200).json({
