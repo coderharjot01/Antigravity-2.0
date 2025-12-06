@@ -12,18 +12,27 @@ function initStars() {
         const x = Math.random() * 100;
         const y = Math.random() * 100;
 
+        // Random drift destination (movement)
+        const moveX = (Math.random() - 0.5) * 100; // -50px to +50px
+        const moveY = (Math.random() - 0.5) * 100;
+
         // Random animation properties
-        const duration = 2 + Math.random() * 4; // 2-6s
-        const delay = Math.random() * 4;
+        const duration = 10 + Math.random() * 20; // 10-30s slow drift
+        const delay = Math.random() * 5;
+        const opacity = 0.3 + Math.random() * 0.7;
 
         star.style.left = `${x}%`;
         star.style.top = `${y}%`;
         star.style.setProperty('--duration', `${duration}s`);
         star.style.setProperty('--delay', `${delay}s`);
+        star.style.setProperty('--moveX', `${moveX}px`);
+        star.style.setProperty('--moveY', `${moveY}px`);
+        star.style.setProperty('--opacity', opacity);
 
-        if (Math.random() < 0.1) {
+        if (Math.random() < 0.2) {
             star.style.width = '3px';
             star.style.height = '3px';
+            star.style.boxShadow = '0 0 8px rgba(255, 255, 255, 0.9), 0 0 15px var(--primary)'; // Brighter glow for big stars
         }
 
         container.appendChild(star);

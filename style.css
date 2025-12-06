@@ -32,7 +32,23 @@ body {
     overflow-x: hidden;
 }
 
-/* Star Background */
+@keyframes drift {
+    0% {
+        transform: translate(0, 0);
+        opacity: var(--opacity);
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(var(--moveX), var(--moveY));
+        opacity: var(--opacity);
+    }
+}
+
+/* Antigravity Background */
 .stars {
     position: fixed;
     top: 0;
@@ -42,6 +58,7 @@ body {
     pointer-events: none;
     z-index: -1;
     overflow: hidden;
+    background: radial-gradient(circle at center, #0a0a0f 0%, #000000 100%);
 }
 
 .star {
@@ -51,44 +68,10 @@ body {
     background: white;
     border-radius: 50%;
     opacity: 0;
-    animation: twinkle var(--duration) ease-in-out infinite;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8), 0 0 8px var(--primary);
+    /* Glow effect */
+    animation: drift var(--duration) ease-in-out infinite alternate;
     animation-delay: var(--delay);
-}
-
-@keyframes twinkle {
-    0% {
-        opacity: 0;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 0.8;
-        transform: scale(1.5);
-        box-shadow: 0 0 10px white;
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(1);
-    }
-}
-
-@keyframes twinkle {
-    0% {
-        opacity: 0;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: 0.8;
-        transform: scale(1.5);
-        box-shadow: 0 0 10px white;
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(1);
-    }
 }
 
 /* Cursor Swarm */
