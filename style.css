@@ -598,6 +598,29 @@ ul {
     border-color: var(--primary);
 }
 
+/* 3D Tilt Effect */
+.service-card,
+.project-card {
+    transition: transform 0.1s ease, box-shadow 0.3s ease;
+    /* Fast transform for tilt */
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    will-change: transform;
+}
+
+.project-card:hover,
+.service-card:hover {
+    z-index: 10;
+}
+
+/* Ensure inner content floats above */
+.service-card>*,
+.project-card .project-info,
+.project-card .project-image {
+    transform: translateZ(20px);
+    /* Pop out effect */
+}
+
 .project-image {
     position: relative;
     height: 250px;

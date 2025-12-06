@@ -160,10 +160,37 @@ function initBackToTop() {
     });
 }
 
+// 3D Tilt Effect
+function initTiltEffect() {
+    const cards = document.querySelectorAll('.project-card, .service-card');
+
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            // Calculate rotation (max +/- 10deg)
+            const xPct = x / rect.width;
+            const yPct = y / rect.height;
+
+            const rotateX = (0.5 - yPct) * 20; // -10 to +10 deg
+            const rotateY = (xPct - 0.5) * 20; // -10 to +10 deg
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initStars();
     initTypingEffect();
     initBackToTop();
+    initTiltEffect();
 });
 
 // Custom Cursor
