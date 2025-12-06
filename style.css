@@ -34,17 +34,21 @@ body {
 
 @keyframes drift {
     0% {
-        transform: translate(0, 0);
-        opacity: var(--opacity);
+        transform: translate(0, 0) scale(1);
+        opacity: 0.3;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
     }
 
     50% {
+        transform: translate(calc(var(--moveX) * 0.5), calc(var(--moveY) * 0.5)) scale(1.5);
         opacity: 1;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 20px var(--primary);
     }
 
     100% {
-        transform: translate(var(--moveX), var(--moveY));
-        opacity: var(--opacity);
+        transform: translate(var(--moveX), var(--moveY)) scale(1);
+        opacity: 0.3;
+        box-shadow: 0 0 2px rgba(255, 255, 255, 0.5);
     }
 }
 
