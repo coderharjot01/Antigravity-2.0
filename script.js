@@ -1,8 +1,9 @@
-// Star Background
-function createStars() {
+// Star Background & Cursor Swarm
+function initStars() {
     const container = document.getElementById('stars-container');
     const starCount = 100;
 
+    // 1. Static Background Stars
     for (let i = 0; i < starCount; i++) {
         const star = document.createElement('div');
         star.className = 'star';
@@ -20,17 +21,60 @@ function createStars() {
         star.style.setProperty('--duration', `${duration}s`);
         star.style.setProperty('--delay', `${delay}s`);
 
-        // Varying sizes
-        if (Math.random() < 0.1) { // 10% chance for bigger star
+        if (Math.random() < 0.1) {
             star.style.width = '3px';
             star.style.height = '3px';
         }
 
         container.appendChild(star);
     }
+
+    // 2. Interactive Cursor Swarm
+    const swarmCount = 20;
+    const swarmStars = [];
+
+    for (let i = 0; i < swarmCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'swarm-star';
+        document.body.appendChild(star);
+
+        swarmStars.push({
+            element: star,
+            x: window.innerWidth / 2,
+            y: window.innerHeight / 2,
+            offsetX: (Math.random() - 0.5) * 60, // Spread range
+            offsetY: (Math.random() - 0.5) * 60,
+            speed: 0.05 + Math.random() * 0.08 // Variable speed for natural feel
+        });
+    }
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateSwarm() {
+        swarmStars.forEach(star => {
+            // Target position is mouse + offset
+            const targetX = mouseX + star.offsetX;
+            const targetY = mouseY + star.offsetY;
+
+            // Smooth easing (Lerp)
+            star.x += (targetX - star.x) * star.speed;
+            star.y += (targetY - star.y) * star.speed;
+
+            star.element.style.transform = `translate(${star.x}px, ${star.y}px)`;
+        });
+        requestAnimationFrame(animateSwarm);
+    }
+
+    animateSwarm();
 }
 
-document.addEventListener('DOMContentLoaded', createStars);
+document.addEventListener('DOMContentLoaded', initStars);
 
 // Custom Cursor
 const cursorDot = document.getElementById('cursor-dot');
