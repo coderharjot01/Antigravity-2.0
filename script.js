@@ -844,3 +844,41 @@ window.addEventListener('appinstalled', () => {
 if (window.matchMedia('(display-mode: standalone)').matches) {
     installPrompt.style.display = 'none';
 }
+
+// Navigation Install Button
+const navInstallButton = document.getElementById('nav-install-button');
+
+// Show nav button when app is installable
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Also show the nav button
+    if (navInstallButton && !window.matchMedia('(display-mode: standalone)').matches) {
+        navInstallButton.style.display = 'inline-flex';
+    }
+});
+
+// Nav button click - same as banner install
+if (navInstallButton) {
+    navInstallButton.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+            alert('To install this app:\n\n• On Android/Chrome: Use the menu and select "Install app"\n• On iPhone: Tap the Share button and select "Add to Home Screen"\n• On Desktop: Look for the install icon in the address bar');
+            return;
+        }
+        
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`User response: ${outcome}`);
+        
+        if (outcome === 'accepted') {
+            navInstallButton.style.display = 'none';
+        }
+        
+        deferredPrompt = null;
+    });
+}
+
+// Hide nav button if already installed
+if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (navInstallButton) {
+        navInstallButton.style.display = 'none';
+    }
+}

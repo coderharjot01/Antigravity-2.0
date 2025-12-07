@@ -2236,3 +2236,47 @@ ul {
         font-size: 0.9rem;
     }
 }
+
+/* Download App Button in Nav */
+.btn-download-app {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.25rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.btn-download-app i {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-download-app:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(99, 102, 241, 0.5);
+    }
+}
+
+@media (max-width: 768px) {
+    .btn-download-app {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}
