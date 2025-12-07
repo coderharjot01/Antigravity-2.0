@@ -3,6 +3,10 @@ function initStars() {
     // Mobile optimization: Less stars
     const isMobile = window.innerWidth < 768;
     const container = document.getElementById('stars-container');
+
+    // Return early if container doesn't exist (e.g., on services page)
+    if (!container) return;
+
     const starCount = isMobile ? 30 : 100; // Reduce from 100 to 30 on mobile
 
     // 1. Static Background Stars
@@ -90,6 +94,10 @@ function initStars() {
 // Typing Text Effect
 function initTypingEffect() {
     const textElement = document.getElementById('typing-text');
+
+    // Return early if element doesn't exist (e.g., on services page)
+    if (!textElement) return;
+
     const phrases = ["Digital Empires", "Scalable Systems", "Stunning Designs", "Future Tech"];
     let phraseIndex = 0;
     let charIndex = 0;
@@ -129,6 +137,10 @@ function initTypingEffect() {
 // Back to Top with Progress
 function initBackToTop() {
     const backToTopBtn = document.getElementById('back-to-top');
+
+    // Return early if button doesn't exist
+    if (!backToTopBtn) return;
+
     const circle = backToTopBtn.querySelector('circle');
     const radius = circle.r.baseVal.value;
     const circumference = 2 * Math.PI * radius;
@@ -713,6 +725,10 @@ contactForm.addEventListener('submit', async (e) => {
     submitButton.disabled = true;
     submitButton.textContent = 'Sending...';
 
+    // Show global loader
+    const globalLoader = document.getElementById('global-loader');
+    if (globalLoader) globalLoader.classList.add('active');
+
     try {
         // Send to backend API
         const response = await fetch('/api/contact', {
@@ -740,6 +756,9 @@ contactForm.addEventListener('submit', async (e) => {
         // Re-enable button
         submitButton.disabled = false;
         submitButton.textContent = originalButtonText;
+
+        // Hide global loader
+        if (globalLoader) globalLoader.classList.remove('active');
     }
 });
 
@@ -812,39 +831,43 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
     // Show the install prompt after 3 seconds
     setTimeout(() => {
-        if (!localStorage.getItem('pwa-dismissed')) {
+        if (!localStorage.getItem('pwa-dismissed') && installPrompt) {
             installPrompt.classList.add('show');
         }
     }, 3000);
 });
 
 // Install button click
-installButton.addEventListener('click', async () => {
-    if (!deferredPrompt) {
-        return;
-    }
+if (installButton) {
+    installButton.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+            return;
+        }
 
-    // Show the install prompt
-    deferredPrompt.prompt();
+        // Show the install prompt
+        deferredPrompt.prompt();
 
-    // Wait for the user to respond to the prompt
-    const { outcome } = await deferredPrompt.userChoice;
+        // Wait for the user to respond to the prompt
+        const { outcome } = await deferredPrompt.userChoice;
 
-    console.log(`User response to the install prompt: ${outcome}`);
+        console.log(`User response to the install prompt: ${outcome}`);
 
-    // Hide the prompt
-    installPrompt.classList.remove('show');
+        // Hide the prompt
+        if (installPrompt) installPrompt.classList.remove('show');
 
-    // Clear the deferredPrompt
-    deferredPrompt = null;
-});
+        // Clear the deferredPrompt
+        deferredPrompt = null;
+    });
+}
 
 // Dismiss button click
-dismissButton.addEventListener('click', () => {
-    installPrompt.classList.remove('show');
-    // Remember dismissal for 7 days
-    localStorage.setItem('pwa-dismissed', Date.now() + (7 * 24 * 60 * 60 * 1000));
-});
+if (dismissButton) {
+    dismissButton.addEventListener('click', () => {
+        if (installPrompt) installPrompt.classList.remove('show');
+        // Remember dismissal for 7 days
+        localStorage.setItem('pwa-dismissed', Date.now() + (7 * 24 * 60 * 60 * 1000));
+    });
+}
 
 // Check if app is already installed
 window.addEventListener('appinstalled', () => {
