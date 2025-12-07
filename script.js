@@ -851,37 +851,34 @@ const navInstallButton = document.getElementById('nav-install-button');
 // Nav button click handler
 if (navInstallButton) {
     navInstallButton.addEventListener('click', async () => {
-        // If we have the native install prompt, use it
+        // If we have the native install prompt, use it directly
         if (deferredPrompt) {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log(`User response: ${outcome}`);
-            deferredPrompt = null;
-        } else {
-            // Otherwise show installation instructions
-            // Show platform-specific instructions
-            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-            const isAndroid = /Android/.test(navigator.userAgent);
+            try {
+                // Show the install prompt immediately
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
 
-            let instructions = 'To install this app:\n\n';
+                if (outcome === 'accepted') {
+                    console.log('App installed successfully!');
+                } else {
+                    console.log('Installation cancelled');
+                }
+
+                deferredPrompt = null;
+            } catch (error) {
+                console.error('Install error:', error);
+            }
+        } else {
+            // For browsers without native prompt (like iOS)
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
             if (isIOS) {
-                instructions += '1. Tap the Share button (□↑) at the bottom\n';
-                instructions += '2. Scroll down and tap "Add to Home Screen"\n';
-                instructions += '3. Tap "Add" to confirm\n';
-                instructions += '4. The app will appear on your home screen!';
-            } else if (isAndroid) {
-                instructions += '1. Tap the menu (⋮) in your browser\n';
-                instructions += '2. Select "Install app" or "Add to Home screen"\n';
-                instructions += '3. Tap "Install" to confirm\n';
-                instructions += '4. The app will appear on your home screen!';
+                // Simple iOS instruction
+                alert('Tap the Share button at the bottom, then "Add to Home Screen"');
             } else {
-                instructions += '1. Look for the install icon (⬇ or ➕) in your browser\'s address bar\n';
-                instructions += '2. Click it and select "Install"\n';
-                instructions += '3. The app will open in its own window!';
+                // Simple instruction for other browsers
+                alert('Look for the install icon (⬇️) in your browser\'s address bar and click it!');
             }
-
-            alert(instructions);
         }
     });
 }
