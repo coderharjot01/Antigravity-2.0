@@ -2105,3 +2105,134 @@ ul {
         height: 55px;
     }
 }
+/* PWA Install Prompt */
+.pwa-install-prompt {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(150%);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.95) 0%, rgba(139, 92, 246, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.4);
+    z-index: 9999;
+    max-width: 500px;
+    width: calc(100% - 40px);
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pwa-install-prompt.show {
+    transform: translateX(-50%) translateY(0);
+}
+
+.install-prompt-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.install-prompt-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    flex-shrink: 0;
+}
+
+.install-prompt-icon i {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+}
+
+.install-prompt-text {
+    flex: 1;
+}
+
+.install-prompt-text h4 {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+}
+
+.install-prompt-text p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.install-prompt-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.btn-install {
+    background: #fff;
+    color: var(--primary);
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+}
+
+.btn-install:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-dismiss {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-dismiss:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 768px) {
+    .pwa-install-prompt {
+        bottom: 80px; /* Above chatbot button */
+        padding: 1.25rem 1.5rem;
+    }
+    
+    .install-prompt-content {
+        gap: 1rem;
+    }
+    
+    .install-prompt-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .install-prompt-icon i {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .btn-install {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
+}

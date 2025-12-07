@@ -1,11 +1,18 @@
-const CACHE_NAME = 'hs21-v1';
+const CACHE_NAME = 'hs21-v2';
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
     '/services.html',
     '/style.css',
     '/script.js',
-    '/manifest.json'
+    '/manifest.json',
+    '/icons/icon-72.png',
+    '/icons/icon-96.png',
+    '/icons/icon-128.png',
+    '/icons/icon-144.png',
+    '/icons/icon-192.png',
+    '/icons/icon-384.png',
+    '/icons/icon-512.png'
 ];
 
 // Install Service Worker

@@ -783,3 +783,64 @@ notificationStyles.innerHTML = `
     }
 `;
 document.head.appendChild(notificationStyles);
+
+// PWA Install Prompt
+let deferredPrompt;
+const installPrompt = document.getElementById('pwa-install-prompt');
+const installButton = document.getElementById('install-button');
+const dismissButton = document.getElementById('dismiss-prompt');
+
+// Capture the install prompt event
+window.addEventListener('beforeinstallprompt', (e) => {
+    // Prevent the mini-infobar from appearing on mobile
+    e.preventDefault();
+    // Stash the event so it can be triggered later
+    deferredPrompt = e;
+    
+    // Show the install prompt after 3 seconds
+    setTimeout(() => {
+        if (!localStorage.getItem('pwa-dismissed')) {
+            installPrompt.classList.add('show');
+        }
+    }, 3000);
+});
+
+// Install button click
+installButton.addEventListener('click', async () => {
+    if (!deferredPrompt) {
+        return;
+    }
+    
+    // Show the install prompt
+    deferredPrompt.prompt();
+    
+    // Wait for the user to respond to the prompt
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    console.log(`User response to the install prompt: ${outcome}`);
+    
+    // Hide the prompt
+    installPrompt.classList.remove('show');
+    
+    // Clear the deferredPrompt
+    deferredPrompt = null;
+});
+
+// Dismiss button click
+dismissButton.addEventListener('click', () => {
+    installPrompt.classList.remove('show');
+    // Remember dismissal for 7 days
+    localStorage.setItem('pwa-dismissed', Date.now() + (7 * 24 * 60 * 60 * 1000));
+});
+
+// Check if app is already installed
+window.addEventListener('appinstalled', () => {
+    console.log('PWA was installed');
+    installPrompt.classList.remove('show');
+    deferredPrompt = null;
+});
+
+// Hide prompt if already installed (running as standalone)
+if (window.matchMedia('(display-mode: standalone)').matches) {
+    installPrompt.style.display = 'none';
+}
