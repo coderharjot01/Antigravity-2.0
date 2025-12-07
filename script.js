@@ -420,6 +420,11 @@ const modalOverlay = document.getElementById('modal-overlay');
 const modalClose = document.getElementById('modal-close');
 const modalBody = document.getElementById('modal-body');
 
+// Check if modal elements exist
+if (!projectModal || !modalOverlay || !modalClose || !modalBody) {
+    console.error('Modal elements not found in DOM');
+}
+
 // Project data
 const projectData = {
     wecurewellness: {
@@ -485,9 +490,17 @@ const projectData = {
 document.addEventListener('click', (e) => {
     const card = e.target.closest('.project-card');
     if (card) {
+        e.preventDefault(); // Prevent any default behavior
         const projectId = card.getAttribute('data-project');
+        console.log('Project card clicked:', projectId); // Debug log
         if (projectId && projectData[projectId]) {
-            openProjectModal(projectId);
+            try {
+                openProjectModal(projectId);
+            } catch (error) {
+                console.error('Error opening modal:', error);
+            }
+        } else {
+            console.error('Project not found:', projectId);
         }
     }
 });
