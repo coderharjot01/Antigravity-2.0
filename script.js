@@ -796,7 +796,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     // Stash the event so it can be triggered later
     deferredPrompt = e;
-    
+
     // Show the install prompt after 3 seconds
     setTimeout(() => {
         if (!localStorage.getItem('pwa-dismissed')) {
@@ -810,18 +810,18 @@ installButton.addEventListener('click', async () => {
     if (!deferredPrompt) {
         return;
     }
-    
+
     // Show the install prompt
     deferredPrompt.prompt();
-    
+
     // Wait for the user to respond to the prompt
     const { outcome } = await deferredPrompt.userChoice;
-    
+
     console.log(`User response to the install prompt: ${outcome}`);
-    
+
     // Hide the prompt
     installPrompt.classList.remove('show');
-    
+
     // Clear the deferredPrompt
     deferredPrompt = null;
 });
@@ -848,37 +848,40 @@ if (window.matchMedia('(display-mode: standalone)').matches) {
 // Navigation Install Button
 const navInstallButton = document.getElementById('nav-install-button');
 
-// Show nav button when app is installable
-window.addEventListener('beforeinstallprompt', (e) => {
-    // Also show the nav button
-    if (navInstallButton && !window.matchMedia('(display-mode: standalone)').matches) {
-        navInstallButton.style.display = 'inline-flex';
-    }
-});
-
-// Nav button click - same as banner install
+// Nav button click handler
 if (navInstallButton) {
     navInstallButton.addEventListener('click', async () => {
-        if (!deferredPrompt) {
-            alert('To install this app:\n\n• On Android/Chrome: Use the menu and select "Install app"\n• On iPhone: Tap the Share button and select "Add to Home Screen"\n• On Desktop: Look for the install icon in the address bar');
-            return;
-        }
-        
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`User response: ${outcome}`);
-        
-        if (outcome === 'accepted') {
-            navInstallButton.style.display = 'none';
-        }
-        
-        deferredPrompt = null;
-    });
-}
+        // If we have the native install prompt, use it
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response: ${outcome}`);
+            deferredPrompt = null;
+        } else {
+            // Otherwise show installation instructions
+            // Show platform-specific instructions
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+            const isAndroid = /Android/.test(navigator.userAgent);
 
-// Hide nav button if already installed
-if (window.matchMedia('(display-mode: standalone)').matches) {
-    if (navInstallButton) {
-        navInstallButton.style.display = 'none';
-    }
+            let instructions = 'To install this app:\n\n';
+
+            if (isIOS) {
+                instructions += '1. Tap the Share button (□↑) at the bottom\n';
+                instructions += '2. Scroll down and tap "Add to Home Screen"\n';
+                instructions += '3. Tap "Add" to confirm\n';
+                instructions += '4. The app will appear on your home screen!';
+            } else if (isAndroid) {
+                instructions += '1. Tap the menu (⋮) in your browser\n';
+                instructions += '2. Select "Install app" or "Add to Home screen"\n';
+                instructions += '3. Tap "Install" to confirm\n';
+                instructions += '4. The app will appear on your home screen!';
+            } else {
+                instructions += '1. Look for the install icon (⬇ or ➕) in your browser\'s address bar\n';
+                instructions += '2. Click it and select "Install"\n';
+                instructions += '3. The app will open in its own window!';
+            }
+
+            alert(instructions);
+        }
+    });
 }
