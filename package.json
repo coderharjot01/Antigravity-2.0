@@ -5,9 +5,15 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "build": "echo 'Static build complete'"
   },
-  "keywords": ["hs21", "digital", "portfolio", "backend"],
+  "keywords": [
+    "hs21",
+    "digital",
+    "portfolio",
+    "backend"
+  ],
   "author": "HS21 Digital",
   "license": "MIT",
   "dependencies": {
