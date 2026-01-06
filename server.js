@@ -497,86 +497,88 @@ app.get('/api/admin/contacts', async (req, res) => {
             error: 'Failed to fetch submissions'
         });
     }
-    // Get all chat logs (admin endpoint - for improving bot training)
-    app.get('/api/admin/chats', async (req, res) => {
-        try {
-            const chats = await ChatLog.find().sort({ timestamp: -1 }).limit(100);
-            res.json({
-                success: true,
-                total: chats.length,
-                logs: chats
-            });
-        } catch (error) {
-            console.error('Error fetching chat logs:', error);
-            res.status(500).json({
-                success: false,
-                error: 'Failed to fetch chat logs'
-            });
-        }
-    });
+});
 
-    // Chatbot endpoint (for future AI integration)
-    app.post('/api/chatbot', async (req, res) => {
-        try {
-            const { message, sessionId } = req.body;
-
-            // Use the smart bot brain
-            const response = getBotResponse(message);
-
-            // Determine type based on response for analytics (simplified)
-            let type = 'general';
-            if (response.includes('₹') || response.includes('price')) type = 'pricing';
-            if (response.includes('services')) type = 'service';
-            if (response.includes('Hello') || response.includes('Hi')) type = 'greeting';
-
-            // Log chat conversation if database is connected
-            if (mongoose.connection.readyState === 1 && sessionId) {
-                const chatLog = new ChatLog({
-                    sessionId,
-                    userMessage: message,
-                    botResponse: response,
-                    type,
-                    ipAddress: req.ip || req.connection.remoteAddress
-                });
-                await chatLog.save();
-            }
-
-            res.json({
-                success: true,
-                response,
-                timestamp: new Date().toISOString()
-            });
-        } catch (error) {
-            console.error('Chatbot error:', error);
-            res.status(500).json({
-                success: true, // Still return success for user experience
-                response: "I'm having trouble right now. Please email us at hello@hs21digital.com",
-                timestamp: new Date().toISOString()
-            });
-        }
-    });
-
-    // 404 handler
-    app.use((req, res) => {
-        res.status(404).json({
-            success: false,
-            error: 'Endpoint not found'
+// Get all chat logs (admin endpoint - for improving bot training)
+app.get('/api/admin/chats', async (req, res) => {
+    try {
+        const chats = await ChatLog.find().sort({ timestamp: -1 }).limit(100);
+        res.json({
+            success: true,
+            total: chats.length,
+            logs: chats
         });
-    });
-
-    // Error handler
-    app.use((err, req, res, next) => {
-        console.error(err.stack);
+    } catch (error) {
+        console.error('Error fetching chat logs:', error);
         res.status(500).json({
             success: false,
-            error: 'Internal server error'
+            error: 'Failed to fetch chat logs'
         });
-    });
+    }
+});
 
-    // Start server if running directly
-    if (require.main === module) {
-        app.listen(PORT, () => {
-            console.log(`
+// Chatbot endpoint (for future AI integration)
+app.post('/api/chatbot', async (req, res) => {
+    try {
+        const { message, sessionId } = req.body;
+
+        // Use the smart bot brain
+        const response = getBotResponse(message);
+
+        // Determine type based on response for analytics (simplified)
+        let type = 'general';
+        if (response.includes('₹') || response.includes('price')) type = 'pricing';
+        if (response.includes('services')) type = 'service';
+        if (response.includes('Hello') || response.includes('Hi')) type = 'greeting';
+
+        // Log chat conversation if database is connected
+        if (mongoose.connection.readyState === 1 && sessionId) {
+            const chatLog = new ChatLog({
+                sessionId,
+                userMessage: message,
+                botResponse: response,
+                type,
+                ipAddress: req.ip || req.connection.remoteAddress
+            });
+            await chatLog.save();
+        }
+
+        res.json({
+            success: true,
+            response,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error('Chatbot error:', error);
+        res.status(500).json({
+            success: true, // Still return success for user experience
+            response: "I'm having trouble right now. Please email us at hello@hs21digital.com",
+            timestamp: new Date().toISOString()
+        });
+    }
+});
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({
+        success: false,
+        error: 'Endpoint not found'
+    });
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        success: false,
+        error: 'Internal server error'
+    });
+});
+
+// Start server if running directly
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`
 ╔════════════════════════════════════════╗
 ║   HS21 Digital Backend Server          ║
 ║   Running on http://localhost:${PORT}    ║
@@ -586,7 +588,7 @@ app.get('/api/admin/contacts', async (req, res) => {
 💾 Database: ${mongoose.connection.readyState === 1 ? 'MongoDB Atlas ✅' : 'Connecting...'}
 🚀 Environment: ${process.env.NODE_ENV || 'development'}
         `);
-        });
-    }
+    });
+}
 
-    module.exports = app;
+module.exports = app;
