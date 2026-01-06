@@ -14,14 +14,22 @@ const { getBotResponse } = require('./utils/botBrain');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// MongoDB Atlas Connection
+// MongoDB Atlas Connection (Optimized for Serverless)
 const connectDB = async () => {
+    // If already connected, reuse connection
+    if (mongoose.connection.readyState === 1) {
+        return;
+    }
+
     try {
-        await mongoose.connect(process.env.MONGODB_URI);
+        await mongoose.connect(process.env.MONGODB_URI, {
+            serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+            socketTimeoutMS: 45000, // Close sockets after 45s
+        });
         console.log('✅ MongoDB Atlas connected successfully');
     } catch (error) {
         console.error('❌ MongoDB connection error:', error.message);
-        console.log('⚠️  Running without database. Contact forms will not be saved.');
+        // Don't swallow error in serverless, let it bubble or handle specifically
     }
 };
 

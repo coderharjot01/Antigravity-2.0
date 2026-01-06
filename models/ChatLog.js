@@ -28,7 +28,8 @@ const chatLogSchema = new mongoose.Schema({
         type: String
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    bufferCommands: false // Disable buffering to fail fast if not connected
 });
 
 // Index for analytics
