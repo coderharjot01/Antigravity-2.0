@@ -310,20 +310,38 @@ const sendBtn = document.getElementById('send-btn');
 const chatMessages = document.getElementById('chat-messages');
 const notificationBadge = document.querySelector('.notification-badge');
 
-// Toggle chat window
-chatToggle.addEventListener('click', () => {
-    // Toggle the active class
-    chatWindow.classList.toggle('active');
+if (chatToggle && chatWindow && closeChat) {
+    // Toggle chat window
+    chatToggle.addEventListener('click', () => {
+        // Toggle the active class
+        chatWindow.classList.toggle('active');
 
-    // Hide notification badge when opening
-    if (chatWindow.classList.contains('active') && notificationBadge) {
-        notificationBadge.style.display = 'none';
+        // Hide notification badge when opening
+        if (chatWindow.classList.contains('active') && notificationBadge) {
+            notificationBadge.style.display = 'none';
+        }
+    });
+
+    closeChat.addEventListener('click', () => {
+        chatWindow.classList.remove('active');
+    });
+
+    // Send button click
+    if (sendBtn) {
+        sendBtn.addEventListener('click', () => {
+            sendMessage(chatInput.value);
+        });
     }
-});
 
-closeChat.addEventListener('click', () => {
-    chatWindow.classList.remove('active');
-});
+    // Enter key to send
+    if (chatInput) {
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage(chatInput.value);
+            }
+        });
+    }
+}
 
 // Send message function
 function sendMessage(messageText) {
@@ -390,13 +408,13 @@ function getBotResponse(userMessage) {
     } else if (userMessage.includes('marketing') || userMessage.includes('seo')) {
         return "Our digital marketing services include SEO, social media management, and PPC campaigns. We can help increase your online visibility and drive real growth. What specific marketing goals do you have?";
     } else if (userMessage.includes('price') || userMessage.includes('cost') || userMessage.includes('pricing')) {
-        return "Our pricing is tailored for the Indian market, starting from ₹15,000 for websites and ₹8,000 for branding. Let's discuss your specific needs! Email us at hello@hs21digital.com for a custom quote.";
+        return "Our pricing is tailored for the Indian market, starting from ₹18,000 for websites and ₹10,000 for branding. Let's discuss your specific needs! Email us at hello@hs21digital.com for a custom quote.";
     } else if (userMessage.includes('hello') || userMessage.includes('hi')) {
         return "Hello! 👋 Thanks for reaching out. How can HS21 Digital help bring your vision to life today?";
     } else if (userMessage.includes('thank')) {
         return "You're welcome! If you have any other questions, feel free to ask. We're here to help! 😊";
     } else {
-        return "Thanks for your message! I'd love to help you further. For detailed information, please email us at hello@hs21digital.com or give us a call at +91 98765 43210. Our team will get back to you shortly!";
+        return "Thanks for your message! I'd love to help you further. For detailed information, please email us at hello@hs21digital.com or give us a call at +91 6397841399. Our team will get back to you shortly!";
     }
 }
 
@@ -406,17 +424,13 @@ function getCurrentTime() {
     return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 }
 
-// Send button click
-sendBtn.addEventListener('click', () => {
-    sendMessage(chatInput.value);
-});
+// (Moved inside the main chatbot check block above)
+// Keeping placeholders here if needed or just removing the original lines if they were replaced above. 
+// Wait, I need to remove the original listeners for sendBtn and chatInput too since they are at lines 410-419.
+// But my previous chunk only covered up to 326.
+// I should handle lines 410-419 separately or included in a larger chunk.
+// Let's do separate chunks for safety.
 
-// Enter key to send
-chatInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        sendMessage(chatInput.value);
-    }
-});
 
 // Quick reply buttons
 document.addEventListener('click', (e) => {
@@ -518,12 +532,12 @@ document.addEventListener('click', (e) => {
 });
 
 // Close modal handlers
-modalClose.addEventListener('click', closeProjectModal);
-modalOverlay.addEventListener('click', closeProjectModal);
+if (modalClose) modalClose.addEventListener('click', closeProjectModal);
+if (modalOverlay) modalOverlay.addEventListener('click', closeProjectModal);
 
 // Close on Escape key
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && projectModal.classList.contains('active')) {
+    if (e.key === 'Escape' && projectModal && projectModal.classList.contains('active')) {
         closeProjectModal();
     }
 });
@@ -676,19 +690,21 @@ document.addEventListener('click', (e) => {
 });
 
 // Close lightbox handlers
-lightboxClose.addEventListener('click', closeFeatureLightbox);
-featureLightbox.addEventListener('click', (e) => {
-    if (e.target === featureLightbox) {
-        closeFeatureLightbox();
-    }
-});
+if (lightboxClose) lightboxClose.addEventListener('click', closeFeatureLightbox);
+if (featureLightbox) {
+    featureLightbox.addEventListener('click', (e) => {
+        if (e.target === featureLightbox) {
+            closeFeatureLightbox();
+        }
+    });
 
-// Close on Escape key
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && featureLightbox.classList.contains('active')) {
-        closeFeatureLightbox();
-    }
-});
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && featureLightbox.classList.contains('active')) {
+            closeFeatureLightbox();
+        }
+    });
+}
 
 function openFeatureLightbox(imageSrc, caption) {
     lightboxImage.src = imageSrc;
@@ -708,59 +724,61 @@ function closeFeatureLightbox() {
 // Contact Form Submission
 const contactForm = document.getElementById('contact-form');
 
-contactForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+if (contactForm) {
+    contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.textContent;
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
 
-    // Get form data
-    const formData = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        message: document.getElementById('message').value
-    };
+        // Get form data
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        };
 
-    // Disable button and show loading state
-    submitButton.disabled = true;
-    submitButton.textContent = 'Sending...';
+        // Disable button and show loading state
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
 
-    // Show global loader
-    const globalLoader = document.getElementById('global-loader');
-    if (globalLoader) globalLoader.classList.add('active');
+        // Show global loader
+        const globalLoader = document.getElementById('global-loader');
+        if (globalLoader) globalLoader.classList.add('active');
 
-    try {
-        // Send to backend API
-        const response = await fetch('/api/contact', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
+        try {
+            // Send to backend API
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
 
-        const data = await response.json();
+            const data = await response.json();
 
-        if (data.success) {
-            // Success - show confirmation
-            showNotification('✅ Thank you! We\'ll be in touch soon.', 'success');
-            contactForm.reset();
-        } else {
-            // Error from server
-            showNotification('❌ ' + (data.error || 'Something went wrong'), 'error');
+            if (data.success) {
+                // Success - show confirmation
+                showNotification('✅ Thank you! We\'ll be in touch soon.', 'success');
+                contactForm.reset();
+            } else {
+                // Error from server
+                showNotification('❌ ' + (data.error || 'Something went wrong'), 'error');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            showNotification('❌ Failed to send message. Please try again.', 'error');
+        } finally {
+            // Re-enable button
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
+
+            // Hide global loader
+            if (globalLoader) globalLoader.classList.remove('active');
         }
-    } catch (error) {
-        console.error('Form submission error:', error);
-        showNotification('❌ Failed to send message. Please try again.', 'error');
-    } finally {
-        // Re-enable button
-        submitButton.disabled = false;
-        submitButton.textContent = originalButtonText;
-
-        // Hide global loader
-        if (globalLoader) globalLoader.classList.remove('active');
-    }
-});
+    });
+}
 
 // Notification function
 function showNotification(message, type = 'info') {

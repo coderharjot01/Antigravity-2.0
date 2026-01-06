@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Launch | HS21 Digital</title>
+    <meta name="description" content="HS21 Digital - Releasing Soon.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Intl Tel Input -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <style>
+        .launch-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        /* Glass Card */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem 4rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            max-width: 600px;
+            width: 90%;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: panelReveal 1s ease-out forwards 3s;
+            /* Reveals after rocket */
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .rocket-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            color: var(--primary);
+            z-index: 20;
+            animation: rocketLaunchSequence 3s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+        }
+
+        .rocket-wrapper i {
+            width: 100px;
+            height: 100px;
+            filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5));
+        }
+
+        .brand-name {
+            font-size: 4rem;
+            font-weight: 800;
+            margin: 0;
+            background: var(--gradient-main);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+
+        .status-message {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Countdown */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .time-box {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .time-val {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 80px;
+            color: white;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .time-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        /* Access Form */
+        .access-form {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-group {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        }
+
+        .access-input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            flex: 1;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        /* Role Toggle */
+        .role-selector {
+            display: flex;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 50px;
+            padding: 4px;
+            margin-bottom: 1rem;
+            position: relative;
+            align-self: center;
+            width: 100%;
+            /* Ensure full width relative to parent or fixed width */
+            max-width: 400px;
+        }
+
+        .role-option {
+            position: relative;
+            z-index: 1;
+            flex: 1;
+            /* Distribute space equally */
+            text-align: center;
+        }
+
+        .role-option input {
+            display: none;
+        }
+
+        .role-option label {
+            display: block;
+            padding: 0.8rem 1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 50px;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .role-option input:checked+label {
+            color: white;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .selector-bg {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            height: calc(100% - 8px);
+            width: calc(50% - 4px);
+            /* Correctly sizing to 50% of the container */
+            background: var(--primary);
+            border-radius: 50px;
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            z-index: 0;
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Logic to move bg based on checked state sibling */
+        /* This is tricky with pure CSS without specific IDs or JS unless we hardcode */
+        /* Let's rely on JS to move the background for robustness or use general sibling combinator if structure allows */
+
+
+        .btn-access {
+            background: var(--gradient-main);
+            border: none;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .btn-access:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.5);
+        }
+
+        .exclusive-tag {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Animations */
+        @keyframes rocketLaunchSequence {
+            0% {
+                transform: translate(-50%, 100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            15% {
+                transform: translate(-50%, 50px) rotate(0deg);
+                opacity: 1;
+            }
+
+            25% {
+                transform: translate(-50%, 50px) rotate(-5deg);
+            }
+
+            35% {
+                transform: translate(-50%, 50px) rotate(5deg);
+            }
+
+            45% {
+                transform: translate(-50%, 50px) rotate(0deg);
+            }
+
+            55% {
+                transform: translate(-50%, 50px) scale(1.2);
+                filter: drop-shadow(0 0 50px var(--primary));
+            }
+
+            100% {
+                transform: translate(-50%, -150vh) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes panelReveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Particle Trail for Rocket (Simple CSS) */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFade 1s linear forwards;
+        }
+
+        @keyframes particleFade {
+            to {
+                opacity: 0;
+                transform: translateY(50px) scale(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .brand-name {
+                font-size: 2.5rem;
+            }
+
+            .glass-panel {
+                padding: 2rem;
+                width: 95%;
+            }
+
+            .time-val {
+                font-size: 1.8rem;
+                min-width: 60px;
+            }
+
+            .countdown {
+                gap: 0.8rem;
+            }
+
+            .input-group {
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
+                border-radius: 20px;
+            }
+
+            .btn-access {
+                width: 100%;
+            }
+        }
+
+        /* Intl Tel Input Overrides for Dark Mode */
+        .iti {
+            width: 100%;
+        }
+
+        .iti__flag-container {
+            border-radius: 50px 0 0 50px;
+        }
+
+        .iti__selected-flag {
+            background: transparent !important;
+        }
+
+        .iti__country-list {
+            background: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) #1a1a1a;
+        }
+
+        .iti__country {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .iti__country:hover {
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        /* Fix input padding for flag */
+        .input-group input.phone-input {
+            padding-left: 50px !important;
+            /* Make space for flag */
+        }
+
+
+        .input-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .full-width {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Background Stars theme -->
+    <div class="stars" id="stars-container"></div>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <main class="launch-container">
+
+        <!-- Launch Animation Element -->
+        <div class="rocket-wrapper">
+            <i data-lucide="rocket"></i>
+        </div>
+
+        <!-- Main Content Card -->
+        <div class="glass-panel">
+            <span class="exclusive-tag">Access Limited</span>
+
+            <div class="content-header">
+                <h1 class="brand-name">HS21 Digital</h1>
+                <p class="status-message">Releasing Soon</p>
+            </div>
+
+            <div class="countdown" id="countdown">
+                <div class="time-box">
+                    <span class="time-val" id="days">00</span>
+                    <span class="time-label">Days</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-val" id="hours">00</span>
+                    <span class="time-label">Hrs</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-val" id="mins">00</span>
+                    <span class="time-label">Mins</span>
+                </div>
+                <div class="time-box">
+                    <span class="time-val" id="secs">00</span>
+                    <span class="time-label">Secs</span>
+                </div>
+            </div>
+
+            <form class="access-form" id="launch-form">
+                <div class="role-selector">
+                    <div class="selector-bg" id="selector-bg"></div>
+                    <div class="role-option">
+                        <input type="radio" name="role" id="role-customer" value="customer" checked>
+                        <label for="role-customer">I'm a Customer</label>
+                    </div>
+                    <div class="role-option">
+                        <input type="radio" name="role" id="role-join" value="join">
+                        <label for="role-join">I want to Join</label>
+                    </div>
+                </div>
+
+                <div class="input-stack">
+                    <div class="input-group">
+                        <input type="email" placeholder="Email Address" class="access-input email-input" required>
+                    </div>
+                    <div class="input-group phone-group">
+                        <input type="tel" id="phone" class="access-input phone-input" required>
+                    </div>
+                    <button type="submit" class="btn-access full-width">Get Access</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Initialize Phone Input
+        const phoneInputField = document.querySelector("#phone");
+        const phoneInput = window.intlTelInput(phoneInputField, {
+            initialCountry: "in",
+            preferredCountries: ["in", "us", "uk"],
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js",
+            autoPlaceholder: "aggressive",
+            separateDialCode: true,
+        });
+
+        // Update padding dynamically based on flag width (optional refinement)
+        phoneInputField.addEventListener('countrychange', function () {
+            // Can add logic here if needed
+        });
+
+        // Rocket Trail Effect
+        const rocket = document.querySelector('.rocket-wrapper');
+        const container = document.querySelector('.launch-container');
+
+        // Create particles while rocket is visible
+        let particleInterval = setInterval(() => {
+            const rect = rocket.getBoundingClientRect();
+            // Stop if rocket is off screen (launch complete)
+            if (rect.top < -100) {
+                clearInterval(particleInterval);
+                return;
+            }
+
+            // Only create if rocket is in launch phase (roughly after 1.5s of animation start)
+            // But let's just make it visually simpler: random particles around center
+            if (getComputedStyle(rocket).opacity > 0.5) {
+                createParticle(rect.left + rect.width / 2, rect.top + rect.height);
+            }
+        }, 50);
+
+        function createParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+
+            // Random offset
+            const offsetX = (Math.random() - 0.5) * 20;
+
+            particle.style.left = `${x + offsetX}px`;
+            particle.style.top = `${y}px`;
+
+            // Random color (fire colors)
+            const colors = ['#f472b6', '#a855f7', '#6366f1', '#fff'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+            container.appendChild(particle);
+
+            // Cleanup
+            setTimeout(() => particle.remove(), 1000);
+        }
+
+        // Countdown Timer
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 14); // 2 weeks from now
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = String(days).padStart(2, '0');
+            document.getElementById("hours").innerText = String(hours).padStart(2, '0');
+            document.getElementById("mins").innerText = String(minutes).padStart(2, '0');
+            document.getElementById("secs").innerText = String(seconds).padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // Role Toggle Animation
+        const selectorBg = document.getElementById('selector-bg');
+        const roleInputs = document.querySelectorAll('input[name="role"]');
+
+        roleInputs.forEach(input => {
+            input.addEventListener('change', (e) => {
+                if (e.target.value === 'join') {
+                    selectorBg.style.transform = 'translateX(100%)';
+                } else {
+                    selectorBg.style.transform = 'translateX(0)';
+                }
+            });
+        });
+
+        // Form handling
+        document.getElementById('launch-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const emailInput = e.target.querySelector('.email-input');
+            const role = document.querySelector('input[name="role"]:checked').value;
+            const originalText = btn.innerText;
+
+            const fullPhoneNumber = phoneInput.getNumber(); // Get number with country code
+            const isValidPhone = phoneInput.isValidNumber();
+
+            if (!isValidPhone) {
+                alert("Please enter a valid phone number for the selected country.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = 'Processing...';
+
+            try {
+                const response = await fetch('/api/subscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: emailInput.value,
+                        phone: fullPhoneNumber,
+                        role: role
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    btn.innerText = role === 'join' ? 'Application Sent! 🚀' : 'Spot Reserved! 🚀';
+                    btn.style.background = '#10b981';
+                    emailInput.value = '';
+                    phoneInput.setNumber(''); // Clear phone input properly
+                } else {
+                    btn.innerText = 'Failed ❌';
+                    btn.style.background = '#ef4444';
+                    alert(data.error || 'Something went wrong');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                btn.innerText = 'Error ❌';
+                btn.style.background = '#ef4444';
+            }
+
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = '';
+                btn.disabled = false;
+            }, 3000);
+        });
+    </script>
+</body>
+
+</html>

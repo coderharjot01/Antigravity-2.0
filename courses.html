@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses | HS21 Digital</title>
+    <meta name="description"
+        content="Enroll in our premium courses for Web Development, Digital Marketing, and Brand Identity.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="stars" id="stars-container"></div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">HS21<span class="accent">.</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="courses.html" class="active">Courses</a></li>
+                <li><a href="index.html#work">Our Work</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="mobile-menu-btn">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Courses Hero -->
+    <section class="services-hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Master <span class="gradient-text">Digital Skills</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Expert-led courses designed to help you launch your career in tech and design. Learn by doing with
+                    real-world projects.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Grid -->
+    <section class="services">
+        <div class="container">
+            <div class="services-grid">
+                <!-- Course 1 -->
+                <div class="service-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="code-2"></i>
+                    </div>
+                    <span class="service-tag">Most Popular</span>
+                    <h3>Web Development Bootcamp</h3>
+                    <p>Become a full-stack developer. Master HTML, CSS, JavaScript, and React in this comprehensive
+                        12-week program.</p>
+                    <ul class="service-list">
+                        <li><i data-lucide="check"></i> Live Classes</li>
+                        <li><i data-lucide="check"></i> 5+ Real Projects</li>
+                        <li><i data-lucide="check"></i> Career Support</li>
+                        <li><i data-lucide="check"></i> Certification</li>
+                    </ul>
+                    <div class="price-tag">₹15,000</div>
+                    <a href="#enroll" class="btn-primary full-width"
+                        onclick="selectCourse('Web Development Bootcamp')">Enroll Now</a>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="service-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="trending-up"></i>
+                    </div>
+                    <!-- <span class="service-tag">Trending</span> -->
+                    <h3>Digital Marketing Mastery</h3>
+                    <p>Learn to drive growth through SEO, Social Media, and Performance Marketing. Perfect for
+                        entrepreneurs and marketers.</p>
+                    <ul class="service-list">
+                        <li><i data-lucide="check"></i> Facebook & Google Ads</li>
+                        <li><i data-lucide="check"></i> SEO Strategies</li>
+                        <li><i data-lucide="check"></i> Analytics Deep Dive</li>
+                        <li><i data-lucide="check"></i> Certification</li>
+                    </ul>
+                    <div class="price-tag">₹12,000</div>
+                    <a href="#enroll" class="btn-secondary full-width"
+                        onclick="selectCourse('Digital Marketing Mastery')">Enroll Now</a>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="service-card">
+                    <div class="icon-wrapper">
+                        <i data-lucide="palette"></i>
+                    </div>
+                    <h3>Brand Identity Design</h3>
+                    <p>Master the art of visual storytelling. Learn logo design, color theory, and typography to build
+                        iconic brands.</p>
+                    <ul class="service-list">
+                        <li><i data-lucide="check"></i> Design Principles</li>
+                        <li><i data-lucide="check"></i> Portfolio Building</li>
+                        <li><i data-lucide="check"></i> Client Management</li>
+                        <li><i data-lucide="check"></i> Certification</li>
+                    </ul>
+                    <div class="price-tag">₹10,000</div>
+                    <a href="#enroll" class="btn-secondary full-width"
+                        onclick="selectCourse('Brand Identity Design')">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enrollment Section -->
+    <section id="enroll" class="contact">
+        <div class="container contact-container">
+            <div class="contact-info">
+                <h2 class="section-title">Start Your Journey</h2>
+                <p>Ready to level up your skills? Fill out the form to secure your spot. Limited seats available for the
+                    next cohort.</p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <i data-lucide="users"></i>
+                        <span>Small Batch Sizes</span>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="video"></i>
+                        <span>Live Interactive Sessions</span>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="award"></i>
+                        <span>Industry Recognized Certificate</span>
+                    </div>
+                </div>
+            </div>
+            <form class="contact-form" id="enrollment-form">
+                <h3 style="margin-bottom: 1.5rem;">Enrollment Form</h3>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="+91 99999 99999" required>
+                </div>
+                <div class="form-group">
+                    <label for="course">Select Course</label>
+                    <select id="course" required
+                        style="width: 100%; padding: 1rem; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border); border-radius: 8px; color: white;">
+                        <option value="" disabled selected>Choose a course...</option>
+                        <option value="Web Development Bootcamp">Web Development Bootcamp</option>
+                        <option value="Digital Marketing Mastery">Digital Marketing Mastery</option>
+                        <option value="Brand Identity Design">Brand Identity Design</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-primary full-width">Submit Application</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">HS21<span class="accent">.</span></a>
+                <p>Elevating businesses and careers through digital innovation.</p>
+            </div>
+            <div class="footer-links">
+                <a href="index.html#services">Services</a>
+                <a href="courses.html">Courses</a>
+                <a href="index.html#work">Work</a>
+                <a href="index.html#contact">Contact</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 HS21 Digital Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <div class="back-to-top" id="back-to-top">
+        <svg class="progress-ring" width="50" height="50">
+            <circle r="23" cx="25" cy="25"></circle>
+        </svg>
+        <i data-lucide="arrow-up"></i>
+    </div>
+
+    <!-- Global Loader -->
+    <div class="global-loader" id="global-loader">
+        <div class="loader-content">
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+        </div>
+        <div class="loader-text">PROCESSING...</div>
+    </div>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="script.js"></script>
+    <script>
+        // Custom script for courses page
+        function selectCourse(courseName) {
+            const select = document.getElementById('course');
+            select.value = courseName;
+            // Scroll to form if not already there (handled by anchor hash, but good to be sure)
+            document.querySelector('#enroll').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Handle Enrollment Submission
+        const enrollmentForm = document.getElementById('enrollment-form');
+        if (enrollmentForm) {
+            enrollmentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const submitButton = enrollmentForm.querySelector('button[type="submit"]');
+                const originalText = submitButton.textContent;
+
+                submitButton.disabled = true;
+                submitButton.textContent = 'Processing...';
+
+                // Show loader
+                const loader = document.getElementById('global-loader');
+                if (loader) loader.classList.add('active');
+
+                const formData = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    course: document.getElementById('course').value,
+                    type: 'enrollment' // Flag for backend
+                };
+
+                try {
+                    // Reusing the contact endpoint but we might want to update server.js to handle this specific type better
+                    // For now, let's send it to /api/contact and format the message
+
+                    const response = await fetch('/api/enroll', { // We will create this endpoint
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        showNotification('✅ Application received! We will contact you shortly.', 'success');
+                        enrollmentForm.reset();
+                    } else {
+                        showNotification('❌ ' + (data.error || 'Something went wrong'), 'error');
+                    }
+                } catch (error) {
+                    console.error('Enrollment error:', error);
+                    showNotification('❌ Failed to submit. Please try again.', 'error');
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalText;
+                    if (loader) loader.classList.remove('active');
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

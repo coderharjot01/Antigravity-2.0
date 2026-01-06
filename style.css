@@ -2383,3 +2383,18 @@ button:disabled,
     filter: grayscale(0.5);
     box-shadow: none !important;
 }
+/* Price Tag for Courses */
+.price-tag {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 1rem 0;
+    padding: 0.5rem 0;
+    border-top: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.full-width {
+    width: 100%;
+    text-align: center;
+}

@@ -7,6 +7,7 @@ require('dotenv').config();
 
 // Import models
 const Contact = require('./models/Contact');
+const Subscriber = require('./models/Subscriber');
 const ChatLog = require('./models/ChatLog');
 
 const app = express();
@@ -198,7 +199,7 @@ app.post('/api/contact', async (req, res) => {
                                             <div style="margin-bottom: 20px;">
                                                 <a href="mailto:hello@hs21digital.com" style="color: #d1d5db; text-decoration: none; font-size: 14px; margin: 0 10px;">hello@hs21digital.com</a>
                                                 <span style="color: #4b5563;">|</span>
-                                                <a href="#" style="color: #d1d5db; text-decoration: none; font-size: 14px; margin: 0 10px;">+91 98765 43210</a>
+                                                <a href="#" style="color: #d1d5db; text-decoration: none; font-size: 14px; margin: 0 10px;">+91 6397841399</a>
                                             </div>
                                             
                                             <p style="color: #4b5563; font-size: 12px; margin: 0;">
@@ -226,7 +227,6 @@ app.post('/api/contact', async (req, res) => {
             `
         };
 
-        // Send emails (skip if EMAIL_USER is not configured)
         // Send emails (skip if EMAIL_USER is not configured)
         if (process.env.EMAIL_USER) {
             console.log('📧 Attempting to send emails...');
@@ -275,6 +275,211 @@ app.post('/api/contact', async (req, res) => {
     }
 });
 
+// Enrollment form submission
+app.post('/api/enroll', async (req, res) => {
+    try {
+        const { name, email, phone, course } = req.body;
+
+        // Validation
+        if (!name || !email || !course) {
+            return res.status(400).json({
+                success: false,
+                error: 'All fields are required'
+            });
+        }
+
+        // Send email notification to Admin
+        const adminMailOptions = {
+            from: process.env.EMAIL_USER,
+            to: process.env.NOTIFICATION_EMAIL || 'hello@hs21digital.com',
+            subject: `🎓 New Course Enrollment: ${course}`,
+            html: `
+                <div style="font-family: Arial, sans-serif;">
+                    <h2 style="color: #6366f1;">New Course Enrollment</h2>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Phone:</strong> ${phone}</p>
+                    <p><strong>Course:</strong> ${course}</p>
+                    <p><strong>Status:</strong> <span style="color: orange;">Pending Payment/Confirmation</span></p>
+                </div>
+            `
+        };
+
+        // Confirmation to Student
+        const studentMailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: `Application Received: ${course} 🎓`,
+            html: `
+                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+                    <h1 style="color: #6366f1;">Application Received!</h1>
+                    <p>Hi ${name},</p>
+                    <p>Thanks for applying for the <strong>${course}</strong> with HS21 Digital.</p>
+                    <p>We are reviewing your application and will get back to you shortly with the next steps regarding the schedule and payment.</p>
+                    <br>
+                    <p>Best,<br>HS21 Education Team</p>
+                </div>
+            `
+        };
+
+        if (process.env.EMAIL_USER) {
+            await transporter.sendMail(adminMailOptions);
+            await transporter.sendMail(studentMailOptions);
+        }
+
+        // You might want to save this to a new Enrollment model, but for now we'll just return success
+        res.status(200).json({
+            success: true,
+            message: 'Application submitted successfully!'
+        });
+
+    } catch (error) {
+        console.error('Enrollment error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to process enrollment'
+        });
+    }
+});
+
+// Waitlist Subscriber Endpoint
+app.post('/api/subscribe', async (req, res) => {
+    try {
+        const { email, phone, role } = req.body;
+
+        // Validation
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                error: 'Email is required'
+            });
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return res.status(400).json({
+                success: false,
+                error: 'Invalid email address'
+            });
+        }
+
+        // Save to database
+        if (mongoose.connection.readyState === 1) {
+            try {
+                // Check if already subscribed
+                const existing = await Subscriber.findOne({ email });
+                if (existing) {
+                    // Update role/phone if changed
+                    existing.role = role || existing.role;
+                    existing.phone = phone || existing.phone;
+                    await existing.save();
+                } else {
+                    const subscriber = new Subscriber({
+                        email,
+                        phone,
+                        role: role || 'customer',
+                        ipAddress: req.ip || req.connection.remoteAddress,
+                        userAgent: req.get('user-agent')
+                    });
+                    await subscriber.save();
+                }
+                console.log(`✅ New subscriber: ${email} (${role})`);
+            } catch (dbError) {
+                console.error('❌ Failed to save subscriber:', dbError.message);
+            }
+        }
+
+        // Send Email(s)
+        if (process.env.EMAIL_USER) {
+            // 1. Notification to Admin
+            const adminMailOptions = {
+                from: process.env.EMAIL_USER,
+                to: process.env.NOTIFICATION_EMAIL || 'hello@hs21digital.com',
+                subject: `🚀 New Launch Waitlist: ${role.toUpperCase()}`,
+                html: `
+                    <div style="font-family: Arial, sans-serif;">
+                        <h2 style="color: #6366f1;">New Waitlist Subscriber</h2>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+                        <p><strong>Role:</strong> ${role}</p>
+                    </div>
+                `
+            };
+            transporter.sendMail(adminMailOptions).catch(err => console.error('Failed to send admin email', err));
+
+            // 2. Beautiful Confirmation to User
+            const userSubject = role === 'join' ? 'Welcome to the HS21 Family! 🌟' : 'You are on the List! 🚀';
+            const userMessage = role === 'join'
+                ? "We are thrilled that you want to join us. We'll be in touch soon to discuss opportunities."
+                : "Thanks for your interest! You've secured your spot for early access.";
+
+            const userMailOptions = {
+                from: `"HS21 Digital" <${process.env.EMAIL_USER}>`,
+                to: email,
+                subject: userSubject,
+                html: `
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="utf-8">
+                    <style>
+                        body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background-color: #f4f4f5; margin: 0; padding: 0; }
+                        .container { max-width: 600px; margin: 0 auto; background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+                        .header { background: #050507; padding: 40px 0; text-align: center; }
+                        .logo { font-size: 28px; font-weight: 700; color: #ffffff; margin: 0; }
+                        .accent { color: #6366f1; }
+                        .content { padding: 40px; text-align: center; }
+                        .title { color: #1a1a1a; font-size: 24px; font-weight: 700; margin-bottom: 20px; }
+                        .text { color: #4b5563; font-size: 16px; line-height: 1.6; margin-bottom: 30px; }
+                        .btn { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); color: #ffffff; text-decoration: none; padding: 14px 32px; border-radius: 50px; font-weight: 600; display: inline-block; }
+                        .footer { background: #f8fafc; padding: 20px; text-align: center; color: #9ca3af; font-size: 12px; }
+                    </style>
+                </head>
+                <body>
+                    <div style="padding: 40px 0;">
+                        <div class="container">
+                            <div class="header">
+                                <h1 class="logo">HS21<span class="accent">.</span></h1>
+                            </div>
+                            <div class="content">
+                                <h2 class="title">You're In!</h2>
+                                <p class="text">
+                                    Hi there,<br><br>
+                                    Thank you for requesting to join <strong>HS21 Digital</strong>.
+                                    <br><br>
+                                    ${userMessage}
+                                    <br><br>
+                                    We received your details and will contact you shortly at <strong>${phone || 'your email'}</strong>.
+                                    Get ready to experience the future of digital innovation.
+                                </p>
+                                </p>
+                            </div>
+                            <div class="footer">
+                                &copy; ${new Date().getFullYear()} HS21 Digital. All rights reserved.
+                            </div>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                `
+            };
+            transporter.sendMail(userMailOptions).catch(err => console.error('Failed to send user confirmation email', err));
+        }
+
+        res.status(200).json({
+            success: true,
+            message: 'Successfully subscribed!'
+        });
+
+    } catch (error) {
+        console.error('Subscribe error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to process subscription'
+        });
+    }
+});
+
 // Get all contact submissions (admin endpoint - should be protected in production)
 app.get('/api/admin/contacts', async (req, res) => {
     try {
@@ -303,7 +508,7 @@ app.post('/api/chatbot', async (req, res) => {
         let type = 'general';
 
         if (message.toLowerCase().includes('price') || message.toLowerCase().includes('cost')) {
-            response = "Our pricing varies based on project scope. Let's discuss your specific needs! Email us at hello@hs21digital.com or call +1 (555) 123-4567.";
+            response = "Our pricing varies based on project scope. Let's discuss your specific needs! Email us at hello@hs21digital.com or call +91 6397841399.";
             type = 'pricing';
         } else if (message.toLowerCase().includes('website') || message.toLowerCase().includes('web')) {
             response = "We specialize in building stunning websites! Contact us at hello@hs21digital.com to discuss your project.";
