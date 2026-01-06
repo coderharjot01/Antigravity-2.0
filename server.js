@@ -502,7 +502,12 @@ app.get('/api/admin/contacts', async (req, res) => {
 // Get all chat logs (admin endpoint - for improving bot training)
 app.get('/api/admin/chats', async (req, res) => {
     try {
-        const chats = await ChatLog.find().sort({ timestamp: -1 }).limit(100);
+        // Ensure DB is connected
+        if (mongoose.connection.readyState !== 1) {
+            await mongoose.connect(process.env.MONGODB_URI);
+        }
+
+        const chats = await ChatLog.find().sort({ createdAt: -1 }).limit(100);
         res.json({
             success: true,
             total: chats.length,
@@ -512,7 +517,7 @@ app.get('/api/admin/chats', async (req, res) => {
         console.error('Error fetching chat logs:', error);
         res.status(500).json({
             success: false,
-            error: 'Failed to fetch chat logs'
+            error: error.message || 'Failed to fetch chat logs'
         });
     }
 });
