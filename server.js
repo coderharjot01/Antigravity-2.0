@@ -9,6 +9,7 @@ require('dotenv').config();
 const Contact = require('./models/Contact');
 const Subscriber = require('./models/Subscriber');
 const ChatLog = require('./models/ChatLog');
+const { getBotResponse } = require('./utils/botBrain');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -503,20 +504,14 @@ app.post('/api/chatbot', async (req, res) => {
     try {
         const { message, sessionId } = req.body;
 
-        // Simple response logic (can be enhanced with AI)
-        let response = "Thanks for your message! For immediate assistance, please email us at hello@hs21digital.com";
-        let type = 'general';
+        // Use the smart bot brain
+        const response = getBotResponse(message);
 
-        if (message.toLowerCase().includes('price') || message.toLowerCase().includes('cost')) {
-            response = "Our pricing varies based on project scope. Let's discuss your specific needs! Email us at hello@hs21digital.com or call +91 6397841399.";
-            type = 'pricing';
-        } else if (message.toLowerCase().includes('website') || message.toLowerCase().includes('web')) {
-            response = "We specialize in building stunning websites! Contact us at hello@hs21digital.com to discuss your project.";
-            type = 'service';
-        } else if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
-            response = "Hello! How can HS21 Digital help bring your vision to life today?";
-            type = 'greeting';
-        }
+        // Determine type based on response for analytics (simplified)
+        let type = 'general';
+        if (response.includes('₹') || response.includes('price')) type = 'pricing';
+        if (response.includes('services')) type = 'service';
+        if (response.includes('Hello') || response.includes('Hi')) type = 'greeting';
 
         // Log chat conversation if database is connected
         if (mongoose.connection.readyState === 1 && sessionId) {
