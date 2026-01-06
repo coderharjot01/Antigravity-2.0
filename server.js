@@ -562,9 +562,10 @@ app.use((err, req, res, next) => {
     });
 });
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`
+// Start server if running directly
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`
 ╔════════════════════════════════════════╗
 ║   HS21 Digital Backend Server          ║
 ║   Running on http://localhost:${PORT}    ║
@@ -573,7 +574,8 @@ app.listen(PORT, () => {
 📧 Email: ${process.env.EMAIL_USER ? 'Configured ✅' : 'Not configured ⚠️'}
 💾 Database: ${mongoose.connection.readyState === 1 ? 'MongoDB Atlas ✅' : 'Connecting...'}
 🚀 Environment: ${process.env.NODE_ENV || 'development'}
-    `);
-});
+        `);
+    });
+}
 
 module.exports = app;

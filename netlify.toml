@@ -1,0 +1,11 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api"
+  status = 200
+
+# Optional: Redirect everything else to index.html if we want SPA-like routing in future, 
+# but for now standard static hosting works for .html files.
