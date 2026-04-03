@@ -104,7 +104,7 @@ module.exports = async (req, res) => {
         }
 
         // Email Handling
-        if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
+        if (false && process.env.EMAIL_USER && process.env.EMAIL_PASSWORD) {
 
             // 1. Notification to Admin
             const adminMailOptions = {

@@ -79,8 +79,8 @@ module.exports = async (req, res) => {
         // Connect to DB (Optional for now, but good practice)
         await connectDB();
 
-        // Check for Email Configuration
-        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+        // Check for Email Configuration - TEMPORARILY DISABLED
+        if (false && (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD)) {
             console.error('❌ Missing EMAIL_USER or EMAIL_PASSWORD environment variables');
             return res.status(500).json({
                 success: false,
@@ -128,10 +128,7 @@ module.exports = async (req, res) => {
         };
 
         try {
-            await transporter.sendMail(adminMailOptions);
-            console.log('✅ Admin notification sent');
-            await transporter.sendMail(studentMailOptions);
-            console.log('✅ Student confirmation sent');
+            console.log('Email sending temporarily disabled');
         } catch (emailError) {
             console.error('❌ Email sending error:', emailError);
             return res.status(500).json({

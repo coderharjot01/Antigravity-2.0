@@ -236,7 +236,8 @@ app.post('/api/contact', async (req, res) => {
             `
         };
 
-        // Send emails (skip if EMAIL_USER is not configured)
+        // Send emails (temporarily disabled)
+        /*
         if (process.env.EMAIL_USER) {
             console.log('📧 Attempting to send emails...');
             try {
@@ -258,6 +259,7 @@ app.post('/api/contact', async (req, res) => {
                 error: 'Email service not configured on server.'
             });
         }
+        */
 
         res.status(200).json({
             success: true,
@@ -331,10 +333,11 @@ app.post('/api/enroll', async (req, res) => {
             `
         };
 
-        if (process.env.EMAIL_USER) {
-            await transporter.sendMail(adminMailOptions);
-            await transporter.sendMail(studentMailOptions);
-        }
+        // Email sending temporarily disabled
+        // if (process.env.EMAIL_USER) {
+        //     await transporter.sendMail(adminMailOptions);
+        //     await transporter.sendMail(studentMailOptions);
+        // }
 
         // You might want to save this to a new Enrollment model, but for now we'll just return success
         res.status(200).json({
@@ -398,8 +401,8 @@ app.post('/api/subscribe', async (req, res) => {
             }
         }
 
-        // Send Email(s)
-        if (process.env.EMAIL_USER) {
+        // Send Email(s) temporarily disabled
+        if (false && process.env.EMAIL_USER) {
             // 1. Notification to Admin
             const adminMailOptions = {
                 from: process.env.EMAIL_USER,

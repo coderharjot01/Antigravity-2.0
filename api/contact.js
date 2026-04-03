@@ -117,8 +117,8 @@ module.exports = async (req, res) => {
             }
         }
 
-        // Check for Email Configuration - CRITICAL for this feature
-        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD) {
+        // Check for Email Configuration - TEMPORARILY DISABLED
+        if (false && (!process.env.EMAIL_USER || !process.env.EMAIL_PASSWORD)) {
             console.error('❌ Missing EMAIL_USER or EMAIL_PASSWORD environment variables');
             return res.status(500).json({
                 success: false,
@@ -129,94 +129,7 @@ module.exports = async (req, res) => {
         console.log('📧 Attempting to send emails...');
 
         try {
-            // Send notification email to you
-            const mailOptions = {
-                from: process.env.EMAIL_USER,
-                to: process.env.NOTIFICATION_EMAIL || process.env.EMAIL_USER, // Fallback to sender if notification email not set
-                subject: `New Contact Form Submission from ${name}`,
-                html: `
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                        <h2 style="color: #6366f1;">New Contact Form Submission</h2>
-                        <div style="background: #f5f5f5; padding: 20px; border-radius: 10px; margin: 20px 0;">
-                            <p><strong>From:</strong> ${name}</p>
-                            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-                            <p><strong>Message:</strong></p>
-                            <p style="background: white; padding: 15px; border-left: 4px solid #6366f1;">${message}</p>
-                        </div>
-                        <hr style="border: none; border-top: 1px solid #ddd; margin: 20px 0;">
-                        <p style="color: #666; font-size: 12px;">
-                            Submitted ID: ${submissionId}<br>
-                            Submitted at: ${contactData.createdAt}<br>
-                            IP Address: ${contactData.ipAddress}
-                        </p>
-                    </div>
-                `
-            };
-
-            await transporter.sendMail(mailOptions);
-            console.log('✅ Notification email sent');
-
-            // Send confirmation email to user
-            const confirmationMail = {
-                from: `"HS21 Digital" <${process.env.EMAIL_USER}>`,
-                to: email,
-                subject: 'We\'ve received your message! 🚀',
-                html: `
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="utf-8">
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                        <title>Thank You</title>
-                    </head>
-                    <body style="margin: 0; padding: 0; background-color: #f4f4f5; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
-                        <table role="presentation" style="width: 100%; border-collapse: collapse;">
-                            <tr>
-                                <td align="center" style="padding: 40px 0;">
-                                    <table role="presentation" style="width: 600px; border-collapse: collapse; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
-                                        <tr>
-                                            <td style="padding: 40px;">
-                                                <div style="text-align: center; margin-bottom: 30px;">
-                                                    <h1 style="color: #1a1a1a; margin: 0 0 10px 0; font-size: 28px; font-weight: 700;">Let's Build Something Great!</h1>
-                                                    <p style="color: #6366f1; margin: 0; font-size: 16px; font-weight: 600; letter-spacing: 1px;">HS21 DIGITAL SOLUTIONS</p>
-                                                </div>
-                                                <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
-                                                    Hi <strong>${name}</strong>,
-                                                </p>
-                                                <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin-bottom: 30px;">
-                                                    Thank you for reaching out to us! We've received your message and are excited to explore how we can help elevate your digital presence. One of our experts will review your inquiry and get back to you within 24 hours.
-                                                </p>
-                                                <div style="background-color: #f8fafc; border-left: 4px solid #6366f1; padding: 20px; border-radius: 4px; margin-bottom: 30px;">
-                                                    <p style="color: #64748b; font-size: 12px; font-weight: 700; text-transform: uppercase; margin: 0 0 10px 0;">Your Message:</p>
-                                                    <p style="color: #334155; font-size: 15px; line-height: 1.6; margin: 0; font-style: italic;">"${message}"</p>
-                                                </div>
-                                                <p style="color: #4b5563; font-size: 16px; line-height: 1.6; margin: 0;">
-                                                    Best regards,<br>
-                                                    <strong>The HS21 Team</strong>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="background-color: #111827; padding: 30px; text-align: center;">
-                                                <p style="color: #ffffff; font-size: 18px; font-weight: 700; margin: 0 0 10px 0;">HS21<span style="color: #6366f1;">.</span></p>
-                                                <p style="color: #9ca3af; font-size: 14px; margin: 0 0 20px 0;">Elevating businesses through digital innovation.</p>
-                                                <p style="color: #4b5563; font-size: 12px; margin: 0;">
-                                                    &copy; ${new Date().getFullYear()} HS21 Digital Solutions. All rights reserved.
-                                                </p>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </td>
-                            </tr>
-                        </table>
-                    </body>
-                    </html>
-                `
-            };
-
-            await transporter.sendMail(confirmationMail);
-            console.log('✅ Confirmation email sent');
-
+            console.log('Email sending temporarily disabled.');
         } catch (emailError) {
             console.error('❌ Email sending error:', emailError);
             // Return detailed error message
